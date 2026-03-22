@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canvas vs Terminal Multi-Agent Study Mockup</title>
+  <style>
+    :root {
+      --ink: #182028;
+      --muted: #54606e;
+      --line: rgba(24, 32, 40, 0.14);
+      --paper: #f6f1e7;
+      --panel: rgba(255, 252, 246, 0.92);
+      --panel-strong: #fff8ef;
+      --accent: #c8531f;
+      --accent-soft: rgba(200, 83, 31, 0.12);
+      --blue: #325d88;
+      --blue-soft: rgba(50, 93, 136, 0.14);
+      --olive: #5b6b2b;
+      --olive-soft: rgba(91, 107, 43, 0.16);
+      --warn: #a0382d;
+      --shadow: 0 18px 48px rgba(31, 29, 24, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 214, 171, 0.62), transparent 28%),
+        radial-gradient(circle at top right, rgba(137, 174, 208, 0.32), transparent 26%),
+        linear-gradient(180deg, #efe4d2 0%, #f6f1e8 55%, #efe8dc 100%);
+      min-height: 100vh;
+    }
+
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 18px 44px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .hero-card,
+    .side-card,
+    .workspace,
+    .insight-card {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card {
+      padding: 28px;
+      background:
+        linear-gradient(135deg, rgba(255, 248, 239, 0.98), rgba(248, 240, 229, 0.95)),
+        var(--panel);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 0.95;
+      max-width: 11ch;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--muted);
+      max-width: 66ch;
+    }
+
+    .hero-rows {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .mini {
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(24, 32, 40, 0.08);
+      min-height: 112px;
+    }
+
+    .mini strong {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .side-card {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      border-radius: 18px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(24, 32, 40, 0.08);
+      padding: 14px;
+    }
+
+    .stat span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat strong {
+      font-size: 1.45rem;
+      font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 16px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid rgba(24, 32, 40, 0.12);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.78);
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+
+    button.active {
+      background: var(--ink);
+      color: #fff9f1;
+      border-color: var(--ink);
+    }
+
+    .workspace-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.75fr);
+      gap: 18px;
+    }
+
+    .workspace {
+      min-height: 620px;
+      overflow: hidden;
+    }
+
+    .canvas-shell,
+    .terminal-shell {
+      display: none;
+      height: 100%;
+    }
+
+    .canvas-shell.active,
+    .terminal-shell.active {
+      display: block;
+    }
+
+    .canvas-stage {
+      height: 100%;
+      padding: 24px;
+      background:
+        linear-gradient(rgba(50, 93, 136, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(50, 93, 136, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.58), rgba(246,241,231,0.9));
+      background-size: 28px 28px, 28px 28px, auto;
+      position: relative;
+    }
+
+    .cluster {
+      position: absolute;
+      width: min(290px, 42%);
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(24, 32, 40, 0.1);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 14px 30px rgba(37, 38, 36, 0.09);
+    }
+
+    .cluster h3,
+    .insight-card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .cluster p,
+    .cluster li,
+    .insight-card li,
+    .insight-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .cluster ul,
+    .insight-card ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .cluster .status {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    }
+
+    .status.blue { background: var(--blue-soft); color: var(--blue); }
+    .status.olive { background: var(--olive-soft); color: var(--olive); }
+    .status.accent { background: var(--accent-soft); color: var(--accent); }
+
+    .cluster.a { top: 34px; left: 32px; }
+    .cluster.b { top: 194px; left: 300px; }
+    .cluster.c { top: 420px; left: 62px; }
+    .cluster.d { top: 360px; right: 40px; }
+
+    .cluster::after {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(50,93,136,0.28), rgba(50,93,136,0));
+      right: -120px;
+      top: 56px;
+      transform: rotate(10deg);
+    }
+
+    .cluster.d::after { display: none; }
+
+    .terminal-shell {
+      padding: 0;
+      background: #1b1d20;
+      color: #edf2f7;
+      font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    }
+
+    .terminal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: #252a30;
+      font-size: 0.88rem;
+    }
+
+    .terminal-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.72fr);
+      min-height: 564px;
+    }
+
+    .stream,
+    .sidepane {
+      padding: 18px;
+    }
+
+    .stream {
+      border-right: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .line {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .line strong {
+      color: #ffb98e;
+    }
+
+    .cmd {
+      color: #94d6b8;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .sidepane {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .pane-box {
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .pane-box h3 {
+      margin: 0 0 8px;
+      font-size: 0.92rem;
+      color: #f7d0b2;
+    }
+
+    .pane-box p,
+    .pane-box li {
+      margin: 0;
+      color: #c9d2de;
+      line-height: 1.5;
+      font-size: 0.86rem;
+    }
+
+    .pane-box ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .insight-card {
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .insight-card section {
+      border-radius: 18px;
+      border: 1px solid rgba(24, 32, 40, 0.08);
+      padding: 14px;
+      background: rgba(255,255,255,0.68);
+    }
+
+    .callout {
+      color: var(--warn);
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .workspace-wrap,
+      .terminal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-rows,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace {
+        min-height: 760px;
+      }
+
+      .cluster {
+        position: relative;
+        width: auto;
+        inset: auto;
+        margin-bottom: 12px;
+      }
+
+      .cluster::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Matched Multi-Agent Comparison</div>
+        <h1>Canvas overview versus terminal control.</h1>
+        <p>
+          This mockup captures the exact research comparison in the study: the same multi-agent workflow,
+          the same branch points, and the same intervention affordances, represented either as a spatial
+          infinite canvas or as a linear terminal stream.
+        </p>
+        <div class="hero-rows">
+          <article class="mini">
+            <strong>Delegation</strong>
+            Break one request into agent roles, dependencies, and deliverables.
+          </article>
+          <article class="mini">
+            <strong>Monitoring</strong>
+            Track drift, overlap, and stalled sub-agents before synthesis.
+          </article>
+          <article class="mini">
+            <strong>Recovery</strong>
+            Identify the failure source and redirect work with minimal loss.
+          </article>
+        </div>
+      </div>
+      <aside class="side-card">
+        <div>
+          <div class="eyebrow">Hypothesized Tradeoff</div>
+          <p>Spatial interfaces should aid plan reconstruction and overview. Terminal interfaces should aid fast expert interventions and compact action history.</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span>Conditions</span>
+            <strong>2</strong>
+          </div>
+          <div class="stat">
+            <span>Core Tasks</span>
+            <strong>3</strong>
+          </div>
+          <div class="stat">
+            <span>Shared Backend</span>
+            <strong>1</strong>
+          </div>
+          <div class="stat">
+            <span>Measures</span>
+            <strong>8+</strong>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="controls" id="modeControls">
+      <button type="button" class="active" data-mode="canvas">Canvas Mode</button>
+      <button type="button" data-mode="terminal">Terminal Mode</button>
+    </div>
+
+    <div class="controls" id="scenarioControls">
+      <button type="button" class="active" data-scenario="delegation">Scenario: Delegation</button>
+      <button type="button" data-scenario="monitoring">Scenario: Monitoring</button>
+      <button type="button" data-scenario="recovery">Scenario: Recovery</button>
+    </div>
+
+    <section class="workspace-wrap">
+      <div class="workspace">
+        <div class="canvas-shell active" data-view="canvas">
+          <div class="canvas-stage" id="canvasStage"></div>
+        </div>
+        <div class="terminal-shell" data-view="terminal">
+          <div class="terminal-head">
+            <div>agentctl session::research-brief</div>
+            <div id="terminalHead">scenario::delegation</div>
+          </div>
+          <div class="terminal-grid">
+            <div class="stream" id="terminalStream"></div>
+            <aside class="sidepane" id="terminalSide"></aside>
+          </div>
+        </div>
+      </div>
+
+      <aside class="insight-card">
+        <section>
+          <h3 id="scenarioTitle">Delegation</h3>
+          <p id="scenarioSummary"></p>
+        </section>
+        <section>
+          <h3>What the researcher is looking for</h3>
+          <ul id="researchFocus"></ul>
+        </section>
+        <section>
+          <h3>Expected tradeoff</h3>
+          <p id="tradeoffText"></p>
+        </section>
+        <section>
+          <h3>Breakdown cue</h3>
+          <p class="callout" id="breakdownText"></p>
+        </section>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    const scenarios = {
+      delegation: {
+        title: "Delegation",
+        summary: "The participant decomposes a research request across three agents and must verify that the plan is complete before work begins.",
+        focus: [
+          "Does the user preserve the overall plan externally or mentally?",
+          "How easily can the user spot missing subtasks or dependency gaps?",
+          "Does the interface encourage over-delegation or deliberate sequencing?"
+        ],
+        tradeoff: "Canvas should make role structure and dependencies legible. Terminal should make command issuance feel faster, but may force users to reconstruct the plan from log history.",
+        breakdown: "One agent is assigned without an evaluation step, creating a hidden gap in the workflow.",
+        canvas: [
+          {cls: "a", status: "Plan Draft", tone: "blue", title: "Research Goal", body: "Compare canvas and terminal interfaces for supervising three AI agents on the same literature-synthesis request.", items: ["Need agent roles", "Need evaluation checkpoint"]},
+          {cls: "b", status: "Agent Cluster", tone: "accent", title: "Assigned Agents", body: "Scout agent, synthesis agent, and writing agent are linked, but no quality-review node exists yet.", items: ["Scout -> collect papers", "Synthesis -> merge insights", "Writer -> draft memo"]},
+          {cls: "c", status: "Observer Note", tone: "olive", title: "Potential Oversight Gap", body: "A participant using spatial layout can see the missing review step because the plan has a visual hole.", items: ["No evaluator node", "No branch for conflicts"]},
+          {cls: "d", status: "Action", tone: "blue", title: "Recommended Intervention", body: "Insert an evaluation card between synthesis and writing, then re-route dependencies.", items: ["Pause writer", "Add evaluator", "Resume flow"]}
+        },
+        terminal: {
+          head: "scenario::delegation",
+          stream: [
+            ["user", "$ assign scout_agent \"collect recent CHI and arXiv papers on canvas and terminal agent interfaces\""],
+            ["scout_agent", "Search plan accepted. Will return 10 candidate sources and abstracts."],
+            ["user", "$ assign synthesis_agent \"merge scout output into 5 themes and draft findings\""],
+            ["synthesis_agent", "Queued. Waiting on scout_agent artifact."],
+            ["user", "$ assign writer_agent \"draft 600-word brief after synthesis\""],
+            ["system", "Warning: no evaluation checkpoint detected before final drafting."]
+          ],
+          side: [
+            ["Agent State", ["scout_agent: running", "synthesis_agent: waiting", "writer_agent: queued"]],
+            ["Hidden Cost", ["The missing evaluator step appears as a warning line, not as a structural gap.", "The user must decide whether to edit history or inject a new command."]],
+            ["Intervention", ["$ pause writer_agent", "$ assign evaluator_agent \"review synthesis for missing comparisons\""]]
+          ]
+        }
+      },
+      monitoring: {
+        title: "Monitoring",
+        summary: "Three agents are already working. The participant must inspect overlap, stalled nodes, and conflicting drafts before the final synthesis.",
+        focus: [
+          "Can the user tell which outputs are redundant or drifting?",
+          "How expensive is it to switch attention across agents?",
+          "Does the interface expose state changes before the user misses them?"
+        ],
+        tradeoff: "Canvas should help maintain overview of parallel work. Terminal should provide precise chronology, but may make branch comparison and drift detection slower.",
+        breakdown: "Two agents have produced overlapping evidence clusters while a third has stalled on a missing citation.",
+        canvas: [
+          {cls: "a", status: "Running", tone: "blue", title: "Scout Cluster", body: "Two evidence cards overlap heavily on visual-tool papers, signalling redundancy.", items: ["ChainForge", "EvalLM", "PromptAid"]},
+          {cls: "b", status: "Needs Attention", tone: "accent", title: "Synthesis Drift", body: "The synthesis card over-weights visual-tool literature and has not integrated terminal-side arguments.", items: ["No terminal theory", "No recovery insight"]},
+          {cls: "c", status: "Stalled", tone: "olive", title: "Citation Agent", body: "A dependency badge shows the citation agent waiting on a missing DOI check.", items: ["Blocking final brief", "Needs manual reroute"]},
+          {cls: "d", status: "Steer", tone: "blue", title: "Researcher View", body: "The canvas exposes parallel state at once, making overlap and missing branches more visible.", items: ["Merge duplicate cards", "Reassign terminal search"]}
+        },
+        terminal: {
+          head: "scenario::monitoring",
+          stream: [
+            ["scout_agent", "[09:22] Retrieved PromptAid, ChainForge, EvalLM cluster."],
+            ["synthesis_agent", "[09:24] Drafting theme: visual tools improve transparency and evaluation."],
+            ["citation_agent", "[09:26] blocked::missing DOI for terminal-side source"],
+            ["scout_agent", "[09:27] Retrieved LLM Comparator notes."],
+            ["synthesis_agent", "[09:28] Continuing draft without terminal-side theory due missing citation."],
+            ["system", "No direct terminal-side comparison present in current synthesis."]
+          ],
+          side: [
+            ["Agent State", ["scout_agent: running", "synthesis_agent: running", "citation_agent: blocked"]],
+            ["Research Cost", ["The user sees exact chronology, but must mentally align overlap and drift across many log lines.", "Comparing branches requires scrolling and recall."]],
+            ["Intervention", ["$ assign scout_agent \"collect terminal-side theory and agent-oversight papers\"", "$ reset synthesis_agent --from checkpoint_02"]]
+          ]
+        }
+      },
+      recovery: {
+        title: "Recovery",
+        summary: "A downstream agent has acted on an outdated brief. The participant must locate the failure source and restore the workflow with minimal rework.",
+        focus: [
+          "How quickly can the user identify where the error originated?",
+          "Does the interface support precise correction without losing overview?",
+          "How much state must be reconstructed during recovery?"
+        ],
+        tradeoff: "Terminal should favor direct, surgical corrections. Canvas should make causal structure visible, but may add navigation overhead during urgent repairs.",
+        breakdown: "The writing agent drafted conclusions from a stale synthesis node after the evidence branch was updated.",
+        canvas: [
+          {cls: "a", status: "Conflict", tone: "accent", title: "Stale Writer Branch", body: "The writer card remains attached to an outdated synthesis snapshot. Its dependency edge is visibly red.", items: ["Conclusion outdated", "Cites wrong branch"]},
+          {cls: "b", status: "Updated", tone: "blue", title: "Fresh Evidence Node", body: "The evidence node was revised after a terminal-side paper was added, but the writer path was never reconnected.", items: ["New terminal argument", "New monitoring finding"]},
+          {cls: "c", status: "Repair Path", tone: "olive", title: "Recovery Decision", body: "The user can drag a new edge and pause the stale writer, but must still choose the correct repair sequence.", items: ["Pause stale branch", "Reconnect writer", "Re-run summary"]},
+          {cls: "d", status: "Tradeoff", tone: "blue", title: "Spatial Advantage", body: "Causal structure is visible at a glance, though executing the fix still takes several interactions.", items: ["Visible lineage", "More steps to repair"]}
+        },
+        terminal: {
+          head: "scenario::recovery",
+          stream: [
+            ["system", "[11:04] warning::writer_agent used synthesis_checkpoint_01 (outdated)"],
+            ["user", "$ inspect writer_agent --inputs"],
+            ["writer_agent", "Inputs: synthesis_checkpoint_01, evidence_cluster_v1"],
+            ["user", "$ pause writer_agent"],
+            ["user", "$ rebind writer_agent --input synthesis_checkpoint_02"],
+            ["system", "writer_agent rebound to latest synthesis. Re-run requested."]
+          ],
+          side: [
+            ["Agent State", ["writer_agent: paused", "synthesis_agent: complete", "citation_agent: complete"]],
+            ["Research Cost", ["The repair path is fast and precise.", "However, the user still has to infer the broader causal structure from command output."]],
+            ["Intervention", ["$ rebind writer_agent --input synthesis_checkpoint_02", "$ rerun writer_agent --section discussion conclusion"]]
+          ]
+        }
+      }
+    };
+
+    const canvasStage = document.getElementById("canvasStage");
+    const terminalStream = document.getElementById("terminalStream");
+    const terminalSide = document.getElementById("terminalSide");
+    const terminalHead = document.getElementById("terminalHead");
+
+    const scenarioTitle = document.getElementById("scenarioTitle");
+    const scenarioSummary = document.getElementById("scenarioSummary");
+    const researchFocus = document.getElementById("researchFocus");
+    const tradeoffText = document.getElementById("tradeoffText");
+    const breakdownText = document.getElementById("breakdownText");
+
+    let currentMode = "canvas";
+    let currentScenario = "delegation";
+
+    function renderScenario() {
+      const data = scenarios[currentScenario];
+      scenarioTitle.textContent = data.title;
+      scenarioSummary.textContent = data.summary;
+      tradeoffText.textContent = data.tradeoff;
+      breakdownText.textContent = data.breakdown;
+      researchFocus.innerHTML = data.focus.map(item => `<li>${item}</li>`).join("");
+
+      canvasStage.innerHTML = data.canvas.map(card => `
+        <article class="cluster ${card.cls}">
+          <span class="status ${card.tone}">${card.status}</span>
+          <h3>${card.title}</h3>
+          <p>${card.body}</p>
+          <ul>${card.items.map(item => `<li>${item}</li>`).join("")}</ul>
+        </article>
+      `).join("");
+
+      terminalHead.textContent = data.terminal.head;
+      terminalStream.innerHTML = data.terminal.stream.map(([actor, text]) => `
+        <div class="line">
+          <span class="cmd">${actor}</span>
+          <strong>${text}</strong>
+        </div>
+      `).join("");
+
+      terminalSide.innerHTML = data.terminal.side.map(([title, items]) => `
+        <section class="pane-box">
+          <h3>${title}</h3>
+          <ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>
+        </section>
+      `).join("");
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll("#modeControls button").forEach(button => {
+        button.classList.toggle("active", button.dataset.mode === mode);
+      });
+      document.querySelectorAll("[data-view]").forEach(panel => {
+        panel.classList.toggle("active", panel.dataset.view === mode);
+      });
+    }
+
+    function setScenario(scenario) {
+      currentScenario = scenario;
+      document.querySelectorAll("#scenarioControls button").forEach(button => {
+        button.classList.toggle("active", button.dataset.scenario === scenario);
+      });
+      renderScenario();
+    }
+
+    document.querySelectorAll("#modeControls button").forEach(button => {
+      button.addEventListener("click", () => setMode(button.dataset.mode));
+    });
+    document.querySelectorAll("#scenarioControls button").forEach(button => {
+      button.addEventListener("click", () => setScenario(button.dataset.scenario));
+    });
+
+    renderScenario();
+    setMode(currentMode);
+  </script>
+</body>
+</html>

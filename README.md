@@ -33,6 +33,8 @@ You no longer need the sibling `autochiresearch` repository as the primary runti
   - evaluation workspaces and benchmark artifacts
 - `docs/`
   - architecture and layout notes
+- `examples/`
+  - curated demo cases and shareable project snapshots
 - `program.md` and `program.zh-CN.md`
   - workflow-level guidance
 - `projects/`
@@ -82,7 +84,16 @@ Use $autochiresearch to turn this idea into a local-first HCI study project.
 - new projects should live outside the skill repository by default to avoid polluting the skill bundle
 - the paper stage requires an independent sub-agent review artifact at `paper/paper-review.md`
 - runtime skills, templates, docs, and evals should stay in separate top-level directories
+- curated demo cases can live under `examples/` as snapshots, but active runs should still default outside the repo
 
 ## Dependency Boundary
 
 This repository now contains the core AutoCHIResearch workspace files and the project-local support skills needed by `$autochiresearch`. General-purpose skills such as `citation-management`, `scientific-writing`, and `playwright` are still useful when available, but they are treated as optional accelerators rather than as a separate local-repository dependency.
+
+## Demo Case
+
+A curated demo case is now included under:
+
+- `examples/canvas-vs-terminal-multi-agent/`
+  - a full local-first research package comparing infinite-canvas and terminal interfaces for multi-agent supervision
+  - includes the prototype, synthetic analysis outputs, a `5000+` word manuscript, and a compiled PDF snapshot

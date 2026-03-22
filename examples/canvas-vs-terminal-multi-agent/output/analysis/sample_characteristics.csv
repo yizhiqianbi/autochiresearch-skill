@@ -1,0 +1,14 @@
+dimension,category,count,percent
+work_role,design,6,27.3
+work_role,engineering,6,27.3
+work_role,product_analysis,4,18.2
+work_role,research,6,27.3
+ai_use_frequency,daily,8,36.4
+ai_use_frequency,several_times_weekly,6,27.3
+ai_use_frequency,weekly,8,36.4
+terminal_familiarity,often,6,27.3
+terminal_familiarity,rarely,8,36.4
+terminal_familiarity,sometimes,8,36.4
+canvas_familiarity,often,8,36.4
+canvas_familiarity,rarely,6,27.3
+canvas_familiarity,sometimes,8,36.4

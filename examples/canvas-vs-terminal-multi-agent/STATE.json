@@ -1,0 +1,126 @@
+{
+  "schema_version": 2,
+  "project": {
+    "name": "无限画布 vs 终端界面下的多 agent 使用模式对比：研究知识工作者在协调多个 AI agent 时的策略、认知负荷与产出质量差异",
+    "slug": "canvas-vs-terminal-multi-agent",
+    "idea": "无限画布 vs 终端界面下的多 agent 使用模式对比：研究知识工作者在协调多个 AI agent 时的策略、认知负荷与产出质量差异",
+    "venue": "CHI",
+    "created_at": "2026-03-22T13:55:56+00:00",
+    "updated_at": "2026-03-22T14:24:32+00:00"
+  },
+  "phases": [
+    {
+      "id": "pre",
+      "label": "Pre",
+      "label_zh": "前期",
+      "description": "Idea shaping, literature retrieval, novelty judgment, and topic keep/pivot decisions.",
+      "stage_ids": [
+        "brief",
+        "novelty"
+      ],
+      "status": "complete"
+    },
+    {
+      "id": "mid",
+      "label": "Mid",
+      "label_zh": "中期",
+      "description": "Study design, optional questionnaire or prototype work, deployment, collection, and analysis setup.",
+      "stage_ids": [
+        "study",
+        "deployment",
+        "analysis"
+      ],
+      "status": "complete"
+    },
+    {
+      "id": "post",
+      "label": "Post",
+      "label_zh": "后期",
+      "description": "Writing, result synthesis, and conclusion-building after the experimental work is complete.",
+      "stage_ids": [
+        "paper"
+      ],
+      "status": "pending"
+    }
+  ],
+  "workflow": [
+    {
+      "id": "brief",
+      "label": "Research Brief",
+      "label_zh": "研究简报",
+      "phase": "pre",
+      "artifact": "artifacts/research-brief.md",
+      "skills": [
+        "chi-project-runner"
+      ],
+      "description": "Translate the raw idea into a concrete HCI problem, users, contribution, and constraints.",
+      "status": "complete"
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty Matrix",
+      "label_zh": "文献与新颖性矩阵",
+      "phase": "pre",
+      "artifact": "artifacts/novelty-matrix.md",
+      "skills": [
+        "citation-management",
+        "chi-topic-scout"
+      ],
+      "description": "Search adjacent work, validate citations, and decide keep / pivot / drop.",
+      "status": "complete"
+    },
+    {
+      "id": "study",
+      "label": "Study Spec",
+      "label_zh": "研究设计与问卷/原型方案",
+      "phase": "mid",
+      "artifact": "artifacts/study-spec.md",
+      "skills": [
+        "hci-study-designer"
+      ],
+      "description": "Decide whether a user study, questionnaire, prototype, or mixed-methods setup is needed and specify it.",
+      "status": "complete"
+    },
+    {
+      "id": "deployment",
+      "label": "Deployment and Collection",
+      "label_zh": "部署与收数准备",
+      "phase": "mid",
+      "artifact": "deploy/deployment-plan.md",
+      "skills": [
+        "study-deployment-ops",
+        "playwright"
+      ],
+      "description": "Prepare deployment, questionnaire distribution, session flow, monitoring, and data collection readiness.",
+      "status": "complete"
+    },
+    {
+      "id": "analysis",
+      "label": "Analysis and Findings",
+      "label_zh": "分析与结果整理",
+      "phase": "mid",
+      "artifact": "analysis/analysis-plan.md",
+      "skills": [
+        "hci-analysis-writer"
+      ],
+      "description": "Pre-commit analysis logic and define how the study data will turn into concrete findings.",
+      "status": "complete"
+    },
+    {
+      "id": "paper",
+      "label": "Writing and Synthesis",
+      "label_zh": "写作与结论综合",
+      "phase": "post",
+      "artifact": "paper/paper-brief.md",
+      "skills": [
+        "scientific-writing",
+        "citation-management"
+      ],
+      "description": "Turn the findings into a paper narrative, synthesize results, and prepare LaTeX drafting.",
+      "status": "pending"
+    }
+  ],
+  "current_phase": "post",
+  "current_stage": "paper",
+  "next_action": "Address the blocking items in paper/paper-review.md, revise the manuscript, and rerun the paper-judge sub-agent. Outstanding review dimensions: Results Sufficiency."
+}

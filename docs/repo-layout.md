@@ -32,6 +32,12 @@
 - `evals/skills/<skill-name>/`
   - skill-local eval prompts, snapshots, and benchmark runs
 
+## Examples
+
+- `examples/<demo-slug>/`
+  - curated, shareable demo cases copied into the repo on purpose
+  - these are snapshots for reference and Git distribution, not the default live project location
+
 ## Human Docs
 
 - `README.md`

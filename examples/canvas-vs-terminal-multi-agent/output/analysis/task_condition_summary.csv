@@ -1,0 +1,7 @@
+task_type,interface_condition,n_trials,completion_seconds_mean,task_success_pct_mean,recovery_latency_seconds_mean,workload_score_mean,plan_recall_score_mean
+delegation,canvas,22,707.773,83.636,96.273,4.015,3.937
+delegation,terminal,22,612.364,81.5,85.864,4.431,2.896
+monitoring,canvas,22,762.591,85.227,88.682,3.945,4.573
+monitoring,terminal,22,902.091,72.364,145.636,5.214,2.751
+recovery,canvas,22,584.182,78.636,72.955,4.381,4.11
+recovery,terminal,22,539.409,84.045,61.773,4.398,3.319

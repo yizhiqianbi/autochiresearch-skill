@@ -15,6 +15,8 @@ This repository now follows a clearer monorepo split inspired by repositories su
   - scaffold files used to initialize new project runs
 - `evals/`
   - evaluation workspaces, snapshots, and benchmark artifacts
+- `examples/`
+  - curated demo snapshots that are intentionally kept in-repo
 - `docs/`
   - architecture notes and operational documentation
 - `projects/`
@@ -28,6 +30,7 @@ That means:
 
 - skill packages should stay readable and self-contained
 - evaluation artifacts should not live under runtime skill folders
+- curated showcase projects should live under `examples/` rather than under `skills/` or active external run directories
 - large scaffold text should live in templates instead of Python string literals
 - shared workflow rules should be reusable across multiple skills
 

@@ -1,0 +1,3 @@
+interface_condition,n_trials,completion_seconds_mean,task_success_pct_mean,intervention_count_mean,recovery_latency_seconds_mean,workload_score_mean,transparency_score_mean,control_score_mean,plan_recall_score_mean,reuse_score_mean
+canvas,66,684.848,82.5,3.394,85.97,4.114,5.638,5.457,4.206,5.275
+terminal,66,684.621,79.303,3.606,97.758,4.681,5.41,5.366,2.989,4.979

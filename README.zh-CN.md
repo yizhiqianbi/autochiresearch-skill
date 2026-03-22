@@ -33,6 +33,8 @@
   - 各个 skill 的评测工件和 benchmark 快照
 - `docs/`
   - 架构说明和仓库布局说明
+- `examples/`
+  - 整理好的 demo case 和可分享项目快照
 - `program.md` / `program.zh-CN.md`
   - 工作流总说明
 - `projects/`
@@ -94,7 +96,16 @@ python3 scripts/autochi.py status <项目 slug 或路径>
 - 新项目默认放在 skill 仓库外，避免把运行产物和 skill 本体混在一起
 - 论文阶段必须有一个独立的 sub-agent 评审产物 `paper/paper-review.md`，不能只靠主 agent 自判完成
 - 运行时 skill、本地模板、共享规范、评测工件要分开放，避免所有东西都堆在 `skills/` 里
+- demo case 可以作为快照放在 `examples/`，但活跃项目仍然默认放在仓库外
 
 ## 说明
 
 这个仓库已经包含了 AutoCHIResearch 的关键工作区骨架和项目内 skill，不再依赖另一个本地仓库才能起步。对于 `citation-management`、`scientific-writing`、`playwright` 这类更通用的技能，仍然是“有则优先用，没有也可以按同样流程继续完成”的增强项。
+
+## Demo Case
+
+当前仓库已经带了一个整理好的 demo case：
+
+- `examples/canvas-vs-terminal-multi-agent/`
+  - 一个完整的本地研究包，主题是“无限画布 vs 终端的多 agent 使用模式比较”
+  - 包含 prototype、synthetic 分析产物、`5000+` 词论文主稿和编译好的 PDF 快照

@@ -1,0 +1,8 @@
+theme,count
+canvas::fast_command_repair,22
+canvas::hybrid_request,44
+canvas::spatial_overview,66
+terminal::fast_command_repair,66
+terminal::hybrid_request,44
+terminal::mental_reconstruction,66
+terminal::spatial_overview,22
