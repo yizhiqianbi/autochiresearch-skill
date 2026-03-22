@@ -11,6 +11,8 @@ You no longer need the sibling `autochiresearch` repository as the primary runti
 
 - `skills/autochiresearch/`
   - the main orchestration skill
+- `skills/shared-references/`
+  - reusable workflow guidance shared across skills
 - `skills/chi-project-runner/`
   - backward-compatible alias
 - `skills/chi-topic-scout/`
@@ -21,8 +23,16 @@ You no longer need the sibling `autochiresearch` repository as the primary runti
   - analysis helper
 - `skills/study-deployment-ops/`
   - local preview and collection-prep helper
+- `skills/paper-compile/`
+  - LaTeX PDF build helper
 - `scripts/autochi.py`
   - project init, state tracking, and sync
+- `templates/`
+  - project scaffold templates consumed by `autochi.py`
+- `evals/`
+  - evaluation workspaces and benchmark artifacts
+- `docs/`
+  - architecture and layout notes
 - `program.md` and `program.zh-CN.md`
   - workflow-level guidance
 - `projects/`
@@ -53,6 +63,8 @@ By default, `init` now creates projects in a sibling directory outside this repo
 `../autochiresearch-projects/`. Set `AUTOCHI_PROJECTS_DIR` if you want a different global location.
 If you already have legacy in-repo projects, run `python3 scripts/autochi.py migrate-legacy-projects`
 to move them into the external projects directory.
+When a manuscript is review-ready, run `python3 scripts/autochi.py build-paper <project>` to try to
+compile `paper/main.tex` into `output/exports/paper.pdf`.
 
 If you want Codex to drive the full workflow:
 
@@ -69,6 +81,7 @@ Use $autochiresearch to turn this idea into a local-first HCI study project.
 - generated artifacts should live under each project's `output/`
 - new projects should live outside the skill repository by default to avoid polluting the skill bundle
 - the paper stage requires an independent sub-agent review artifact at `paper/paper-review.md`
+- runtime skills, templates, docs, and evals should stay in separate top-level directories
 
 ## Dependency Boundary
 

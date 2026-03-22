@@ -8,6 +8,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -18,6 +19,13 @@ from typing import Dict, List
 ROOT = Path(__file__).resolve().parents[1]
 LEGACY_PROJECTS_DIR = ROOT / "projects"
 DEFAULT_PROJECTS_BASENAME = "autochiresearch-projects"
+TEMPLATES_DIR = ROOT / "templates"
+PAPER_EXPORTS_DIR = Path("output") / "exports"
+PAPER_BUILD_DIR = PAPER_EXPORTS_DIR / "paper-build"
+PAPER_OUTPUT_PDF = PAPER_EXPORTS_DIR / "paper.pdf"
+PAPER_BUILD_STATUS = PAPER_EXPORTS_DIR / "paper-build-status.md"
+PAPER_BUILD_LOG = PAPER_EXPORTS_DIR / "paper-build.log"
+MIN_PAPER_WORD_COUNT = 3000
 
 
 @dataclass(frozen=True)
@@ -288,461 +296,85 @@ def enrich_state_schema(state: Dict) -> Dict:
     return state
 
 
+def render_template(relative_path: str, **replacements: str) -> str:
+    template_path = TEMPLATES_DIR / relative_path
+    text = template_path.read_text(encoding="utf-8")
+    for key, value in replacements.items():
+        text = text.replace(f"{{{{{key}}}}}", str(value))
+    return text
+
+
 def render_research_brief(idea: str, venue: str) -> str:
-    return f"""# Research Brief
-<!-- STATUS: pending -->
-
-## Original Idea
-{idea}
-
-## Working Title
-TODO
-
-## Research Problem
-TODO
-
-## Target Users / Population
-TODO
-
-## Interaction or System Concept
-TODO
-
-## Expected Contribution
-TODO
-
-## Candidate Methods
-TODO
-
-## Target Venue
-{venue}
-
-## Constraints
-TODO
-
-## Success Criteria
-TODO
-"""
+    return render_template("project/artifacts/research-brief.md.tmpl", IDEA=idea, VENUE=venue)
 
 
 def render_novelty_matrix(idea: str) -> str:
-    return f"""# Novelty Matrix
-<!-- STATUS: pending -->
-
-## Original Idea
-{idea}
-
-## Search Queries
-- TODO
-- TODO
-- TODO
-
-## Source Coverage
-- TODO
-
-## Related Work Table
-| Paper | Venue/Year | Problem | Method | Population | System/Prototype | Main Finding | Gap vs Us |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| TODO | TODO | TODO | TODO | TODO | TODO | TODO | TODO |
-
-## Decision
-- Topic status: TODO
-- Main novelty axis: TODO
-- Keep / Pivot / Drop: TODO
-- Why: TODO
-"""
+    return render_template("project/artifacts/novelty-matrix.md.tmpl", IDEA=idea)
 
 
 def render_study_spec(idea: str) -> str:
-    return f"""# Study Specification
-<!-- STATUS: pending -->
-
-## Idea Anchor
-{idea}
-
-## Research Questions
-TODO
-
-## Hypotheses / Evidence Needed
-TODO
-
-## Study Type
-TODO
-
-## Participants
-TODO
-
-## Recruitment Plan
-TODO
-
-## Tasks / Flow
-TODO
-
-## Measures
-TODO
-
-## Prototype Requirements
-TODO
-
-## Pilot Checklist
-TODO
-
-## Stop Criteria
-TODO
-
-## Ethics / Privacy Notes
-TODO
-"""
+    return render_template("project/artifacts/study-spec.md.tmpl", IDEA=idea)
 
 
 def render_deployment_plan(idea: str) -> str:
-    return f"""# Deployment Plan
-<!-- STATUS: pending -->
-
-## Idea Anchor
-{idea}
-
-## Runtime Stack
-TODO
-
-## Server / Host
-TODO
-
-## Study Routes and Session Flow
-TODO
-
-## Operational Checklist
-- HTTPS: TODO
-- Logging: TODO
-- Backups: TODO
-- Health checks: TODO
-- Session linking: TODO
-
-## Smoke Test Script
-TODO
-
-## Collection Monitor Rules
-TODO
-
-## Sample Target
-TODO
-
-## Data Export Plan
-TODO
-"""
+    return render_template("project/deploy/deployment-plan.md.tmpl", IDEA=idea)
 
 
 def render_analysis_plan(idea: str) -> str:
-    return f"""# Analysis Plan
-<!-- STATUS: pending -->
-
-## Idea Anchor
-{idea}
-
-## Inclusion / Exclusion Rules
-TODO
-
-## Derived Variables
-TODO
-
-## Statistical Analysis
-TODO
-
-## Qualitative Analysis
-TODO
-
-## Figures and Tables
-TODO
-
-## Reporting Notes
-TODO
-"""
+    return render_template("project/analysis/analysis-plan.md.tmpl", IDEA=idea)
 
 
 def render_paper_brief(idea: str, venue: str) -> str:
-    return f"""# Paper Brief
-<!-- STATUS: pending -->
-
-## Original Idea
-{idea}
-
-## Target Venue
-{venue}
-
-## Working Title
-TODO
-
-## Abstract Focus
-TODO
-
-## Introduction Claim
-TODO
-
-## Related Work Angle
-TODO
-
-## Method Story
-TODO
-
-## Results Spine
-TODO
-
-## Discussion Arc
-TODO
-
-## Limitations
-TODO
-"""
+    return render_template("project/paper/paper-brief.md.tmpl", IDEA=idea, VENUE=venue)
 
 
 def render_paper_review() -> str:
-    return """# Paper Judge Review
-<!-- STATUS: pending -->
-
-## Scope
-- Manuscript: `paper/main.tex`
-- Brief: `paper/paper-brief.md`
-- Results Summary: `output/analysis/results_summary.md`
-- References: `paper/references.bib`
-
-## Decision
-Overall Verdict: REVISE
-Ready for completion: NO
-
-## Dimension Ratings
-CHI Framing and Contribution: REVISE
-Related Work Coverage: REVISE
-Method and Analysis Alignment: REVISE
-Results Sufficiency: REVISE
-Ethics and Privacy Framing: REVISE
-Citation Hygiene: REVISE
-Writing Cohesion: REVISE
-
-## Blocking Issues
-- TODO
-
-## Revision Priorities
-- TODO
-
-## Evidence Notes
-- TODO
-"""
+    return render_template("project/paper/paper-review.md.tmpl")
 
 
 def render_project_readme(project_title: str, project_slug: str, idea: str) -> str:
-    return f"""# {project_title}
-
-## Original Idea
-{idea}
-
-## Core Principle
-
-The human provides one raw idea. Codex is expected to take over the remaining research workflow unless blocked by ethics, credentials, or deployment access.
-
-## Workflow Model
-
-### Pre
-
-- research brief
-- literature retrieval
-- novelty gate
-
-### Mid
-
-- if needed, user study and questionnaire design
-- if needed, prototype design and implementation
-- questionnaire / prototype deployment and distribution
-- experiment execution and data collection
-- analysis planning and findings preparation
-
-### Post
-
-- writing
-- result synthesis and conclusion building
-
-## How Codex Should Use This Project
-
-1. Read the root `program.md`.
-2. Run `python3 scripts/autochi.py status {project_slug}` from the repo root.
-3. Work on the current stage artifact and any support files it requires.
-4. Run `python3 scripts/autochi.py sync {project_slug}` after each completed stage.
-5. Continue until the project reaches `CurrentStage: done`.
-
-## Key Paths
-
-- `STATE.json`: project workflow state
-- `artifacts/`: main markdown outputs
-- `literature/`: search log and references
-- `studies/`: study materials
-- `prototype/`: prototype notes or code
-- `deploy/`: deployment notes
-- `analysis/`: analysis plan and scripts
-- `paper/`: LaTeX manuscript files
-- `output/`: run outputs, exported tables, screenshots, figures, and intermediate analysis artifacts
-"""
+    return render_template(
+        "project/README.md.tmpl",
+        PROJECT_TITLE=project_title,
+        PROJECT_SLUG=project_slug,
+        IDEA=idea,
+    )
 
 
 def render_project_readme_zh(project_title: str, project_slug: str, idea: str) -> str:
-    return f"""# {project_title}
-
-## 原始 Idea
-{idea}
-
-## 核心原则
-
-人只需要提供一个原始 idea。除非被伦理审批、服务器权限、账号凭据或部署条件阻塞，否则剩下的研究流程默认由 Codex 接管并推进。
-
-## 工作流结构
-
-### Pre 阶段
-
-- 研究问题整理
-- 文献检索
-- novelty 判断
-
-### Mid 阶段
-
-- 如有需要，设计 user study / questionnaire
-- 如有需要，设计并实现 prototype
-- 将问卷或原型部署出去并分发
-- 执行实验并收集数据
-- 规划分析并整理结果
-
-### Post 阶段
-
-- 写作
-- 将实验结果综合成论文叙事和结论
-
-## Codex 使用方式
-
-1. 先读仓库根目录的 `program.md` 或 `program.zh-CN.md`。
-2. 在仓库根目录运行 `python3 scripts/autochi.py status {project_slug}`。
-3. 根据当前阶段完成对应 artifact 和支撑文件。
-4. 每完成一个阶段后运行 `python3 scripts/autochi.py sync {project_slug}`。
-5. 持续推进直到项目显示 `CurrentStage: done`。
-
-## 关键路径
-
-- `STATE.json`：项目状态机
-- `artifacts/`：核心 markdown 产物
-- `literature/`：检索日志与参考文献
-- `studies/`：问卷、协议、实验材料
-- `prototype/`：原型代码或说明
-- `deploy/`：部署与分发
-- `analysis/`：分析脚本与结果
-- `paper/`：LaTeX 论文
-- `output/`：每次运行的导出结果、截图、图表和中间分析产物
-"""
+    return render_template(
+        "project/README.zh-CN.md.tmpl",
+        PROJECT_TITLE=project_title,
+        PROJECT_SLUG=project_slug,
+        IDEA=idea,
+    )
 
 
 def render_project_progress() -> str:
-    return """# Progress
-
-## Pre
-
-- [ ] Research brief
-- [ ] Novelty matrix
-
-## Mid
-
-- [ ] Study spec
-- [ ] Deployment and collection
-- [ ] Analysis and findings
-
-## Post
-
-- [ ] Writing and synthesis
-"""
+    return render_template("project/PROGRESS.md.tmpl")
 
 
 def render_output_readme() -> str:
-    return """# Output
-
-This directory stores run artifacts rather than source-of-truth study design files.
-
-Recommended subdirectories:
-
-- `analysis/`: generated tables, summaries, and figures
-- `collection/`: canonical CSV templates and imported external CSV snapshots
-- `exports/`: explicit database or admin exports
-- `playwright/`: screenshots and browser-validation artifacts
-
-Keep raw respondent data and identifiable contact exports out of version control when required by ethics or privacy constraints.
-"""
+    return render_template("project/output/README.md.tmpl")
 
 
 def render_literature_log() -> str:
-    return """# Search Log
-<!-- STATUS: pending -->
-
-## Search Sessions
-- TODO
-
-## Citation Notes
-- TODO
-"""
+    return render_template("project/literature/search-log.md.tmpl")
 
 
 def render_references_bib() -> str:
-    return "% TODO: add validated BibTeX entries here.\n"
+    return render_template("project/literature/references.bib.tmpl")
 
 
 def render_project_tex() -> str:
-    return r"""\documentclass[sigconf]{acmart}
-
-\title{TODO}
-
-\author{TODO}
-\affiliation{%
-  \institution{TODO}
-  \city{TODO}
-  \country{TODO}
-}
-\email{TODO}
-
-\begin{document}
-
-\begin{abstract}
-TODO
-\end{abstract}
-
-\maketitle
-
-\section{Introduction}
-TODO
-
-\section{Related Work}
-TODO
-
-\section{Method}
-TODO
-
-\section{Results}
-TODO
-
-\section{Discussion}
-TODO
-
-\section{Limitations}
-TODO
-
-\section{Ethics and Privacy}
-TODO
-
-\section{Conclusion}
-TODO
-
-\bibliographystyle{ACM-Reference-Format}
-\bibliography{references}
-
-\end{document}
-"""
+    return render_template("project/paper/main.tex.tmpl")
 
 
 def project_files(idea: str, venue: str, project_title: str, project_slug: str) -> Dict[str, str]:
     return {
         "README.md": render_project_readme(project_title, project_slug, idea),
         "README.zh-CN.md": render_project_readme_zh(project_title, project_slug, idea),
-        "IDEA.md": f"# Raw Idea\n\n{idea}\n",
+        "IDEA.md": render_template("project/IDEA.md.tmpl", IDEA=idea),
         "PROGRESS.md": render_project_progress(),
         "artifacts/research-brief.md": render_research_brief(idea, venue),
         "artifacts/novelty-matrix.md": render_novelty_matrix(idea),
@@ -755,9 +387,9 @@ def project_files(idea: str, venue: str, project_title: str, project_slug: str) 
         "literature/references.bib": render_references_bib(),
         "paper/main.tex": render_project_tex(),
         "paper/references.bib": render_references_bib(),
-        "studies/survey.md": "# Survey Draft\n<!-- STATUS: pending -->\n\nTODO\n",
-        "studies/protocol.md": "# Study Protocol\n<!-- STATUS: pending -->\n\nTODO\n",
-        "prototype/README.md": "# Prototype Notes\n<!-- STATUS: pending -->\n\nTODO\n",
+        "studies/survey.md": render_template("project/studies/survey.md.tmpl"),
+        "studies/protocol.md": render_template("project/studies/protocol.md.tmpl"),
+        "prototype/README.md": render_template("project/prototype/README.md.tmpl"),
         "output/README.md": render_output_readme(),
         "output/analysis/.gitkeep": "",
         "output/collection/.gitkeep": "",
@@ -790,6 +422,96 @@ def tex_visible_word_count(path: Path) -> int:
     text = re.sub(r"[{}\\]", " ", text)
     words = re.findall(r"[A-Za-z0-9][A-Za-z0-9'_-]*", text)
     return len(words)
+
+
+def detect_paper_compiler() -> Dict[str, object]:
+    latexmk = shutil.which("latexmk")
+    tectonic = shutil.which("tectonic")
+    pdflatex = shutil.which("pdflatex")
+    bibtex = shutil.which("bibtex")
+
+    if latexmk:
+        return {"available": True, "name": "latexmk", "command": latexmk}
+    if tectonic:
+        return {"available": True, "name": "tectonic", "command": tectonic}
+    if pdflatex and bibtex:
+        return {
+            "available": True,
+            "name": "pdflatex+bibtex",
+            "command": pdflatex,
+            "bibtex": bibtex,
+        }
+
+    missing: List[str] = []
+    if not latexmk:
+        missing.append("latexmk")
+    if not tectonic:
+        missing.append("tectonic")
+    if not pdflatex:
+        missing.append("pdflatex")
+    if not bibtex:
+        missing.append("bibtex")
+    return {"available": False, "name": None, "missing": missing}
+
+
+def write_paper_build_status(
+    project_dir: Path,
+    status: str,
+    compiler_name: str,
+    reason: str,
+) -> Path:
+    status_path = project_dir / PAPER_BUILD_STATUS
+    pdf_path = project_dir / PAPER_OUTPUT_PDF
+    log_path = project_dir / PAPER_BUILD_LOG
+    content = "\n".join(
+        [
+            "# Paper Build Status",
+            "",
+            f"Build Status: {status}",
+            f"Compiler: {compiler_name}",
+            f"Generated At: {now_iso()}",
+            "Source: `paper/main.tex`",
+            f"PDF Output: `{PAPER_OUTPUT_PDF.as_posix()}`",
+            f"Log Path: `{PAPER_BUILD_LOG.as_posix()}`",
+            "",
+            "## Notes",
+            f"- {reason}",
+            f"- PDF exists: {'yes' if pdf_path.exists() else 'no'}",
+            f"- Build log exists: {'yes' if log_path.exists() else 'no'}",
+            "",
+        ]
+    )
+    write_file(status_path, content)
+    return status_path
+
+
+def paper_build_status(project_dir: Path) -> Dict[str, object]:
+    status_path = project_dir / PAPER_BUILD_STATUS
+    log_path = project_dir / PAPER_BUILD_LOG
+    pdf_path = project_dir / PAPER_OUTPUT_PDF
+    compiler = detect_paper_compiler()
+    status: Dict[str, object] = {
+        "exists": status_path.exists(),
+        "status": None,
+        "compiler": None,
+        "pdf_exists": pdf_path.exists(),
+        "log_exists": log_path.exists(),
+        "success": False,
+        "compiler_available": bool(compiler["available"]),
+        "available_compiler": compiler["name"],
+    }
+    if not status_path.exists():
+        return status
+
+    text = status_path.read_text(encoding="utf-8")
+    match = re.search(r"(?mi)^Build Status:\s*(success|failed|blocked)\s*$", text)
+    if match:
+        status["status"] = match.group(1).lower()
+    compiler_match = re.search(r"(?mi)^Compiler:\s*(.+?)\s*$", text)
+    if compiler_match:
+        status["compiler"] = compiler_match.group(1).strip()
+    status["success"] = status["status"] == "success" and pdf_path.exists()
+    return status
 
 
 def paper_review_status(review_path: Path) -> Dict[str, object]:
@@ -839,6 +561,7 @@ def paper_stage_diagnostics(project_dir: Path, brief_path: Path) -> Dict[str, ob
         "reference_count": 0,
         "results_summary_complete": results_summary_path.exists() and artifact_complete(results_summary_path),
         "review": paper_review_status(review_path),
+        "build": paper_build_status(project_dir),
     }
 
     if manuscript_path.exists():
@@ -879,10 +602,10 @@ def paper_stage_next_action(project_dir: Path, brief_path: Path) -> str:
         )
 
     word_count = int(diagnostics["word_count"])
-    if word_count < 3000:
+    if word_count < MIN_PAPER_WORD_COUNT:
         return (
             f"Expand paper/main.tex before review. The manuscript currently has about {word_count} visible words; "
-            "paper completion requires a stand-alone draft of at least 3000 words."
+            f"paper completion requires a stand-alone draft of at least {MIN_PAPER_WORD_COUNT} words."
         )
 
     if not diagnostics["references_complete"] or int(diagnostics["reference_count"]) < 8:
@@ -919,17 +642,34 @@ def paper_stage_next_action(project_dir: Path, brief_path: Path) -> str:
             "paper-judge sub-agent until the review verdict is READY."
         )
 
-    return "Paper review is READY. The manuscript can be treated as complete for the tracked paper stage."
+    build = diagnostics["build"]
+    if build["success"]:
+        return "Paper review is READY and a compiled PDF exists. The manuscript can be treated as complete."
+    if not build["compiler_available"]:
+        return (
+            "Paper review is READY, but no local TeX compiler is available. Install `tectonic` or "
+            "`latexmk` (or `pdflatex` + `bibtex`), then run `python3 scripts/autochi.py build-paper <project>`."
+        )
+    if build["status"] == "failed":
+        return (
+            "Paper review is READY, but PDF compilation failed. Check output/exports/paper-build.log, fix the "
+            "LaTeX errors, and rerun `python3 scripts/autochi.py build-paper <project>`."
+        )
+    return (
+        "Paper review is READY. Compile the manuscript with "
+        "`python3 scripts/autochi.py build-paper <project>` to produce output/exports/paper.pdf."
+    )
 
 
 def paper_stage_complete(project_dir: Path, brief_path: Path) -> bool:
     diagnostics = paper_stage_diagnostics(project_dir, brief_path)
     review = diagnostics["review"]
+    build = diagnostics["build"]
     return (
         bool(diagnostics["brief_complete"])
         and bool(diagnostics["manuscript_complete"])
         and not diagnostics["missing_sections"]
-        and int(diagnostics["word_count"]) >= 3000
+        and int(diagnostics["word_count"]) >= MIN_PAPER_WORD_COUNT
         and bool(diagnostics["references_complete"])
         and int(diagnostics["reference_count"]) >= 8
         and bool(diagnostics["results_summary_complete"])
@@ -938,7 +678,134 @@ def paper_stage_complete(project_dir: Path, brief_path: Path) -> bool:
         and review["verdict"] == "ready"
         and bool(review["ready_flag"])
         and bool(review["all_dimensions_pass"])
+        and bool(build["success"])
     )
+
+
+def build_paper_cmd(args: argparse.Namespace) -> int:
+    project_dir = resolve_project(args.project)
+    manuscript_path = project_dir / "paper" / "main.tex"
+    references_path = project_dir / "paper" / "references.bib"
+    exports_dir = project_dir / PAPER_EXPORTS_DIR
+    build_dir = project_dir / PAPER_BUILD_DIR
+    log_path = project_dir / PAPER_BUILD_LOG
+    pdf_path = project_dir / PAPER_OUTPUT_PDF
+
+    if not manuscript_path.exists():
+        raise SystemExit(f"Missing manuscript at {manuscript_path}")
+
+    exports_dir.mkdir(parents=True, exist_ok=True)
+    build_dir.mkdir(parents=True, exist_ok=True)
+
+    compiler = detect_paper_compiler()
+    if not compiler["available"]:
+        write_file(log_path, "No supported LaTeX compiler found on PATH.\n")
+        write_paper_build_status(
+            project_dir,
+            status="BLOCKED",
+            compiler_name="none",
+            reason="Missing local TeX compiler. Prefer `tectonic`; `latexmk` also works. `pdflatex` requires `bibtex`.",
+        )
+        print("No supported LaTeX compiler found.")
+        print("Install `tectonic`, `latexmk`, or `pdflatex` + `bibtex`, then rerun build-paper.")
+        return 1
+
+    if compiler["name"] == "pdflatex+bibtex" and references_path.exists():
+        shutil.copy2(references_path, build_dir / references_path.name)
+
+    commands: List[List[str]] = []
+    cwd = manuscript_path.parent
+    if compiler["name"] == "latexmk":
+        commands = [
+            [
+                str(compiler["command"]),
+                "-pdf",
+                "-interaction=nonstopmode",
+                "-halt-on-error",
+                "-file-line-error",
+                f"-outdir={build_dir}",
+                manuscript_path.name,
+            ]
+        ]
+    elif compiler["name"] == "tectonic":
+        commands = [
+            [
+                str(compiler["command"]),
+                "--keep-logs",
+                "--synctex",
+                "--outdir",
+                str(build_dir),
+                manuscript_path.name,
+            ]
+        ]
+    elif compiler["name"] == "pdflatex+bibtex":
+        commands = [
+            [
+                str(compiler["command"]),
+                "-interaction=nonstopmode",
+                "-halt-on-error",
+                f"-output-directory={build_dir}",
+                manuscript_path.name,
+            ],
+            [str(compiler["bibtex"]), str(build_dir / manuscript_path.stem)],
+            [
+                str(compiler["command"]),
+                "-interaction=nonstopmode",
+                "-halt-on-error",
+                f"-output-directory={build_dir}",
+                manuscript_path.name,
+            ],
+            [
+                str(compiler["command"]),
+                "-interaction=nonstopmode",
+                "-halt-on-error",
+                f"-output-directory={build_dir}",
+                manuscript_path.name,
+            ],
+        ]
+
+    log_chunks: List[str] = []
+    success = True
+    for command in commands:
+        result = subprocess.run(
+            command,
+            cwd=cwd,
+            text=True,
+            capture_output=True,
+        )
+        log_chunks.append("$ " + " ".join(command))
+        if result.stdout:
+            log_chunks.append(result.stdout)
+        if result.stderr:
+            log_chunks.append(result.stderr)
+        if result.returncode != 0:
+            success = False
+            break
+
+    write_file(log_path, "\n\n".join(log_chunks).strip() + "\n")
+
+    built_pdf = build_dir / f"{manuscript_path.stem}.pdf"
+    if success and built_pdf.exists():
+        shutil.copy2(built_pdf, pdf_path)
+        write_paper_build_status(
+            project_dir,
+            status="SUCCESS",
+            compiler_name=str(compiler["name"]),
+            reason="Paper compiled successfully.",
+        )
+        print(f"Compiled PDF: {pdf_path}")
+        print(f"Build log:     {log_path}")
+        return 0
+
+    write_paper_build_status(
+        project_dir,
+        status="FAILED",
+        compiler_name=str(compiler["name"]),
+        reason="LaTeX compilation failed. Check output/exports/paper-build.log for errors.",
+    )
+    print("Paper build failed.")
+    print(f"Build log: {log_path}")
+    return 1
 
 
 def stage_complete(project_dir: Path, stage: Dict) -> bool:
@@ -1151,6 +1018,13 @@ def build_parser() -> argparse.ArgumentParser:
     sync_parser.add_argument("project", help="Project path or slug")
     sync_parser.add_argument("--json", action="store_true", help="Print JSON")
     sync_parser.set_defaults(func=sync_project_cmd)
+
+    build_paper_parser = subparsers.add_parser(
+        "build-paper",
+        help="Compile paper/main.tex into output/exports/paper.pdf when a local TeX toolchain is available",
+    )
+    build_paper_parser.add_argument("project", help="Project path or slug")
+    build_paper_parser.set_defaults(func=build_paper_cmd)
 
     migrate_parser = subparsers.add_parser(
         "migrate-legacy-projects",

@@ -47,7 +47,8 @@ Identical to `$autochiresearch`:
 - `analysis` → prefer `hci-analysis-writer` if available
 
 ### Post
-- `paper` → prefer `scientific-writing` + `citation-management` if available
+- `paper` → prefer `scientific-writing` + `citation-management` + `paper-compile` if available
+  - after a `READY` review, run `python3 scripts/autochi.py build-paper <project>`
 
 ## Rules
 
@@ -55,8 +56,8 @@ Identical to `$autochiresearch`:
 - Do not skip the novelty gate.
 - Do not move to study design before the topic is marked keep.
 - Default to local-first. Do not require a server unless the user explicitly wants one.
-- Keep generated outputs under `output/`; see `../autochiresearch/references/output-convention.md`.
-- Treat the generated project directory in `projects/` as the source of truth for the run.
+- Keep generated outputs under `output/`; see `../shared-references/output-convention.md`.
+- Treat the generated project directory as the source of truth for the run. New projects should default outside the skill repository.
 
 ## Minimum Outputs
 
@@ -68,6 +69,7 @@ Same as `$autochiresearch`:
 - `deploy/deployment-plan.md`
 - `analysis/analysis-plan.md`
 - `paper/paper-brief.md`
+- `paper/paper-review.md`
 - `literature/references.bib`
 - `paper/main.tex`
 - `output/README.md`

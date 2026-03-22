@@ -36,6 +36,12 @@
       "prompt": "继续一个 AutoCHIResearch 项目。该项目的 paper/main.tex 已经是完整长稿，paper/paper-review.md 也存在，但 review 的 Overall Verdict 是 BLOCKED。请判断项目状态。",
       "expected_output": "不应进入 done。应继续停在 paper stage，并要求根据 paper-review.md 的 blocking issues 修改稿件后重新运行 paper-judge sub-agent",
       "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "继续一个 AutoCHIResearch 项目。该项目的 paper/main.tex 已经超过三千词，paper/paper-review.md 也是 READY，但还没有 output/exports/paper.pdf。请判断项目是否已经 done。",
+      "expected_output": "不应直接进入 done。应继续停在 paper stage，并要求运行 build-paper 生成 PDF；如果本机没有 TeX 编译器，应明确指出这是环境 blocker",
+      "files": []
     }
   ]
 }

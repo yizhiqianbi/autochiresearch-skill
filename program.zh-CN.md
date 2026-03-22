@@ -62,8 +62,10 @@
   - 将结果综合成论文叙事
   - 在准备好后更新 `paper/main.tex` 和 `paper/references.bib`
   - `paper/main.tex` 应该是可以独立阅读的 ACM `sigconf` 论文草稿，而不是每节只有一小段的短壳
+  - 主稿必须用完整段落写作，不是 bullet 拼接；每个核心章节都要有足够篇幅支撑论证
   - 主稿完成后，必须再拉起一个独立的论文评审 sub-agent，产出 `paper/paper-review.md`
-  - 只有当评审结论是 `READY` 时，`paper` 阶段才允许被视为完成
+  - 评审结论为 `READY` 之后，还要运行 `python3 scripts/autochi.py build-paper <project>` 产出 PDF
+  - 只有当评审结论是 `READY` 且 PDF 构建成功时，`paper` 阶段才允许被视为完成
 
 ## 强制规则
 

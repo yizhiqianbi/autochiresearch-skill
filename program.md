@@ -63,9 +63,12 @@ Stages:
   - update `paper/main.tex` and `paper/references.bib` when drafting is ready
   - `paper/main.tex` should be a stand-alone ACM `sigconf` manuscript draft, not a short shell
     with a paragraph per section
+  - draft in full paragraphs; treat section length seriously rather than aiming for a minimal shell
   - once the manuscript is draftable, spawn an independent paper-judge sub-agent and require it to
     produce `paper/paper-review.md`
+  - after the review is `READY`, compile the manuscript with `python3 scripts/autochi.py build-paper <project>`
   - the `paper` stage should only count as complete when that review returns a `READY` verdict
+    and a PDF build succeeds
 
 ## Mandatory Rules
 

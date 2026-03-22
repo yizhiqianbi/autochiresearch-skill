@@ -11,6 +11,8 @@
 
 - `skills/autochiresearch/`
   - 主 skill
+- `skills/shared-references/`
+  - 多个 skill 共用的流程规范
 - `skills/chi-project-runner/`
   - 兼容旧名字的 alias
 - `skills/chi-topic-scout/`
@@ -21,8 +23,16 @@
   - 分析与结果整理辅助
 - `skills/study-deployment-ops/`
   - 本地预览、分发和收数准备辅助
+- `skills/paper-compile/`
+  - LaTeX 论文 PDF 构建辅助
 - `scripts/autochi.py`
   - 项目初始化、状态机、阶段同步
+- `templates/`
+  - `autochi.py` 使用的项目脚手架模板
+- `evals/`
+  - 各个 skill 的评测工件和 benchmark 快照
+- `docs/`
+  - 架构说明和仓库布局说明
 - `program.md` / `program.zh-CN.md`
   - 工作流总说明
 - `projects/`
@@ -65,6 +75,8 @@ python3 scripts/autochi.py status <项目 slug 或路径>
 如果你要统一改默认位置，设置 `AUTOCHI_PROJECTS_DIR` 即可。
 如果你之前已经把项目建在仓库内，可以运行 `python3 scripts/autochi.py migrate-legacy-projects`
 把旧项目迁到新的外部目录。
+当论文主稿和 review 都准备好后，可以运行 `python3 scripts/autochi.py build-paper <project>`
+尝试把 `paper/main.tex` 编译成 `output/exports/paper.pdf`。
 
 如果你是通过 Codex 调用 skill，直接说：
 
@@ -81,6 +93,7 @@ python3 scripts/autochi.py status <项目 slug 或路径>
 - 每次运行产物统一放到项目内的 `output/`
 - 新项目默认放在 skill 仓库外，避免把运行产物和 skill 本体混在一起
 - 论文阶段必须有一个独立的 sub-agent 评审产物 `paper/paper-review.md`，不能只靠主 agent 自判完成
+- 运行时 skill、本地模板、共享规范、评测工件要分开放，避免所有东西都堆在 `skills/` 里
 
 ## 说明
 

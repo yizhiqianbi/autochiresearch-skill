@@ -86,9 +86,11 @@ genuinely blocked by ethics review, missing credentials, or an explicit novelty 
 ### Post
 
 - `paper`
-  - Prefer `scientific-writing` and `citation-management` if they are available
-  - Read `references/paper-judge.md` before the final completion pass
+  - Prefer `scientific-writing`, `citation-management`, and `paper-compile` if they are available
+  - Read `../shared-references/paper-judge.md` before the final completion pass
   - Update `paper/paper-brief.md`, `paper/main.tex`, `paper/paper-review.md`, and `paper/references.bib`
+  - After the review is `READY`, compile the manuscript to `output/exports/paper.pdf` with:
+    `python3 scripts/autochi.py build-paper <slug>`
   - Treat `paper/main.tex` as the real artifact, not as a placeholder shell
   - The manuscript should be a stand-alone ACM `sigconf` draft with, at minimum:
     - Abstract
@@ -102,9 +104,14 @@ genuinely blocked by ethics review, missing credentials, or an explicit novelty 
     - Conclusion
   - Once the manuscript is structurally complete, spawn a dedicated sub-agent to judge the paper.
     Give that sub-agent only the project-local manuscript context it needs and have it write a
-    fresh `paper/paper-review.md` using the rubric in `references/paper-judge.md`.
+    fresh `paper/paper-review.md` using the rubric in `../shared-references/paper-judge.md`.
   - Do not self-grade the paper and immediately mark the stage complete. The paper stage now
     requires an independent review artifact with a `READY` verdict before `sync` can advance.
+  - A long draft alone is still insufficient. The paper stage should not count as complete until a
+    PDF build succeeds or the user explicitly accepts an environment-level TeX blocker.
+  - When drafting `paper/main.tex`, write full prose paragraphs rather than bullet skeletons. As a
+    rough floor: Abstract 150--250 words, Introduction 600+, Related Work 600+, Method 700+,
+    Results 800+, and Discussion 500+.
   - Do not mark the paper stage complete with a short synopsis. A CHI-ready draft should be
     substantial enough to read as a real paper rather than an outline.
   - As a practical rule of thumb, target at least a few thousand words in `paper/main.tex`; many real
@@ -127,7 +134,7 @@ genuinely blocked by ethics review, missing credentials, or an explicit novelty 
 
 ## Output Convention
 
-Read `references/output-convention.md` before creating or moving run artifacts. Default generated
+Read `../shared-references/output-convention.md` before creating or moving run artifacts. Default generated
 outputs belong under:
 
 - `output/analysis`
@@ -146,6 +153,8 @@ already uses a different explicit convention.
   - `python3 scripts/autochi.py status <slug>`
 - Recompute phase state:
   - `python3 scripts/autochi.py sync <slug>`
+- Compile the paper:
+  - `python3 scripts/autochi.py build-paper <slug>`
 - Run a local study app:
   - `python3 prototype/app.py init-db`
   - `python3 prototype/app.py run --host 127.0.0.1 --port <port>`
@@ -178,7 +187,8 @@ Leave each project with, at minimum:
 For the paper stage specifically, `paper/main.tex` should be a stand-alone manuscript draft rather
 than a section list with short placeholder paragraphs. If the project only has a paper brief and a
 very short LaTeX shell, the paper stage is still incomplete. The stage is also incomplete if there
-is no independent `paper/paper-review.md` or if that review does not give a `READY` verdict.
+is no independent `paper/paper-review.md`, if that review does not give a `READY` verdict, or if
+no compiled `output/exports/paper.pdf` has been produced.
 
 When the project uses manual external distribution, also leave:
 
