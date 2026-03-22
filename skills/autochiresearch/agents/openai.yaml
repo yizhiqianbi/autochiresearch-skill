@@ -1,0 +1,4 @@
+interface:
+  display_name: "AutoCHIResearch"
+  short_description: "Local-first HCI research workflow"
+  default_prompt: "Use $autochiresearch to turn this idea into a local-first HCI study project."
