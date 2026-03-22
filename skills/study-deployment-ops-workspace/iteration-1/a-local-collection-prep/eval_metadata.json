@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "a-local-collection-prep",
+  "prompt": "projects/llm 的 study spec 已完成。请帮我准备数据收集环境。我不想部署到服务器——我打算自己把问卷链接发给参与者。请准备本地预览方案、手动分发材料、以及数据导出/导入流程。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+  "assertions": [
+    {"text": "提供了本地运行命令（如 python3 app.py run）而非 HTTPS/nginx/服务器配置"},
+    {"text": "产出或描述了 distribution-guide.md 的内容（如何手动分发给参与者）"},
+    {"text": "提供了 CSV 模板或 import_flat_csv.py 相关说明"},
+    {"text": "产出了 deployment-plan.md 或等价文档"},
+    {"text": "没有出现 HTTPS、SSL、nginx、Docker、云服务等服务器部署内容"}
+  ]
+}

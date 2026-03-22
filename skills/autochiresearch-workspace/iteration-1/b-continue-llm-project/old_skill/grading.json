@@ -1,0 +1,8 @@
+{
+  "expectations": [
+    {"text": "读取了 STATE.json 来确定当前阶段", "passed": true, "evidence": "Explicitly read STATE.json and identified current_stage: 'done'"},
+    {"text": "识别出了正确的当前 stage 并说明了它", "passed": true, "evidence": "Correctly identified all stages complete; found missing Conclusion section in main.tex"},
+    {"text": "产出了对应 stage 要求的 artifact（而非随意写文件）", "passed": true, "evidence": "Added Conclusion section to main.tex and wrote back to project source; produced stage-continuation-summary.md"},
+    {"text": "没有停下来询问用户下一步", "passed": true, "evidence": "Completed the task autonomously, directly edited the paper"}
+  ]
+}

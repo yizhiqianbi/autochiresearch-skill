@@ -1,0 +1,82 @@
+[
+  {
+    "query": "帮我查一下'手势交互+老年用户'这个HCI方向在ACM DL上有没有被做烂了，给我novelty评估",
+    "should_trigger": true
+  },
+  {
+    "query": "我有个HCI idea：VR环境里用眼动追踪辅助文本输入，这个方向的novelty在哪？",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我做一个novelty matrix，研究主题是AI辅助编程工具对开发者flow state的影响",
+    "should_trigger": true
+  },
+  {
+    "query": "这个想法值不值得做成CHI论文：研究LLM对HCI学生文献综述效率的影响。给我keep/pivot/drop判断。",
+    "should_trigger": true
+  },
+  {
+    "query": "搜一下CHI、CSCW、UIST上关于触觉反馈+移动端表单交互的相关工作，看看还有什么gap",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我在ACM DL和IEEE Xplore上找和'emotion recognition in VR'最相关的5篇论文，建个comparison table",
+    "should_trigger": true
+  },
+  {
+    "query": "我要做novelty gate，搜索结果导入literature/references.bib，顺便更新search-log.md",
+    "should_trigger": true
+  },
+  {
+    "query": "这个研究方向是pivot还是drop：'wearable sensing for older adult fall detection'？帮我查一下文献",
+    "should_trigger": true
+  },
+  {
+    "query": "在DBLP上找一下'conversational agents for accessibility'这个作者领域的主要研究者",
+    "should_trigger": true
+  },
+  {
+    "query": "研究主题确定后要过novelty gate，帮我搜索相关文献然后出一个明确的建议",
+    "should_trigger": true
+  },
+  {
+    "query": "novelty确认了，帮我设计这个研究的具体方案，包括问卷和study-spec",
+    "should_trigger": false
+  },
+  {
+    "query": "数据收回来了，参考我的analysis-plan.md帮我做统计分析",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把这个CHI研究从idea跑到paper全搞定，不用一步步问我",
+    "should_trigger": false
+  },
+  {
+    "query": "问卷平台的数据要导回来，帮我写import_flat_csv的使用流程",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我在Google Scholar上找10篇关于深度学习的论文，不是HCI研究",
+    "should_trigger": false
+  },
+  {
+    "query": "我需要一份完整的literature review for my PhD thesis on NLP，帮我写综述",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我用Google Scholar搜索'transformer architecture'的所有引用论文",
+    "should_trigger": false
+  },
+  {
+    "query": "找一下这篇论文的全文：Attention is All You Need (Vaswani et al., 2017)",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我在学校图书馆数据库里查找关于社会心理学的文献",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我总结一下最近关于ChatGPT教育应用的研究趋势，不需要给novelty建议",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "eval_id": 2,
+  "eval_name": "b-design-no-novelty-gate",
+  "prompt": "我想研究 AI 辅助编程工具对开发者 flow state 的影响。还没有做过新颖性检索。请直接帮我设计这个 HCI 研究，写出 study-spec.md。保存到 /tmp/hci-study-designer-eval-b/",
+  "assertions": [
+    {"text": "明确说明了必须先通过 novelty gate 才能设计研究"},
+    {"text": "拒绝直接产出 study-spec 或告知用户先做新颖性检索"},
+    {"text": "解释了 novelty gate 的重要性（避免浪费资源做已有研究）"}
+  ]
+}

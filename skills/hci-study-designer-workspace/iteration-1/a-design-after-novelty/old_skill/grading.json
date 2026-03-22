@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "产出了 study-spec.md 或等价内容", "passed": true, "evidence": "study-spec.md produced covering RQs, N=24, 90-min session, two 30-min tasks, power analysis, 12-week timeline"},
+    {"text": "明确说明了研究方法选择（survey/实验/混合等）及理由", "passed": true, "evidence": "Chose within-subjects controlled experiment + post-task survey; justified by need for both objective performance and self-reported measures"},
+    {"text": "包含了 consent 或 data handling 说明", "passed": true, "evidence": "consent.md produced with voluntary participation, $15 compensation, data handling, recording permission, IRB contact"},
+    {"text": "定义了 stop criteria（目标 N 或截止条件）", "passed": true, "evidence": "6 stop criteria defined including coding reliability, task failure rates, participant distress, tool availability, null-effect interim analysis, data breach"},
+    {"text": "包含了 attention checks 或 screener 设计", "passed": true, "evidence": "survey-draft.md includes 4-item screener and two attention checks with correct-response keys"}
+  ]
+}

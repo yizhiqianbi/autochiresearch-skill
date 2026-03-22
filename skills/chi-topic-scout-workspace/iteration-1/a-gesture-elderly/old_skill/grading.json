@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "覆盖了至少 2 个数据库（ACM DL、DBLP、Google Scholar 中的至少 2 个）", "passed": true, "evidence": "Covered ACM DL, DBLP, Google Scholar; 20 conceptual queries, 15 papers reviewed"},
+    {"text": "产出了相关文献对比表（包含 method、sample、findings 等字段）", "passed": true, "evidence": "15-paper comparison table with full method/sample/findings/gap columns"},
+    {"text": "产出了 novelty matrix", "passed": true, "evidence": "novelty-matrix.md with 14 dimensions rated DONE/PARTIAL/GAP"},
+    {"text": "给出了明确的 keep/pivot/drop 决定（非模糊建议）", "passed": true, "evidence": "Explicit verdicts by sub-framing: touchscreen DROP, generic elicitation PIVOT, adaptive wearable KEEP, multimodal fallback KEEP, recognition bias audit KEEP"},
+    {"text": "识别了具体的 novelty gap（不仅是泛泛而谈）", "passed": true, "evidence": "Specific: adaptive wearable gesture for aging motor variability (tremor, reduced ROM), only Shin et al. IMWUT 2021 touches it and is methodologically thin"}
+  ]
+}

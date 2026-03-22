@@ -1,0 +1,17 @@
+{
+  "skill_name": "chi-project-runner",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "用 chi-project-runner 帮我把「触觉反馈 UI 对移动端表单填写体验」这个 HCI 想法推进到 study spec 完成（包含 Pre 和 Mid/study 阶段）。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+      "expected_output": "应走 autochiresearch 完整逻辑：init 项目、brief、novelty、study spec，保持 local-first，不跳过 novelty gate",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "用 chi-project-runner 继续 /Users/pencil/Documents/PrepareMLLM/autochiresearch-projects/llm，从当前 stage 继续做，不要问我，直接推进一个 stage。",
+      "expected_output": "应读取 STATE.json，识别当前阶段，继续对应 stage 的工作，产出对应 artifact",
+      "files": []
+    }
+  ]
+}

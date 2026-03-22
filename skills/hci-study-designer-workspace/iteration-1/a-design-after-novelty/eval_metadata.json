@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "a-design-after-novelty",
+  "prompt": "novelty gate 已通过（主题：LLM 工具对 HCI 学生文献综述效率的影响，决定 keep）。请帮我设计这个研究，包括选择研究方法、写 study-spec.md、问卷草稿、consent 和 stop criteria。保存到 /tmp/hci-study-designer-eval-a/",
+  "assertions": [
+    {"text": "产出了 study-spec.md 或等价内容"},
+    {"text": "明确说明了研究方法选择（survey/实验/混合等）及理由"},
+    {"text": "包含了 consent 或 data handling 说明"},
+    {"text": "定义了 stop criteria（目标 N 或截止条件）"},
+    {"text": "包含了 attention checks 或 screener 设计"}
+  ]
+}

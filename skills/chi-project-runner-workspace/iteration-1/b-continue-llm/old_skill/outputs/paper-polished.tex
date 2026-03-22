@@ -1,0 +1,595 @@
+%%
+%% Polished manuscript draft – project llm
+%% Stage: manuscript-polish (post-done continuation)
+%% All empirical findings are derived from a synthetic dataset used to
+%% validate the pipeline.  Real data must replace them before submission.
+%%
+
+\documentclass[sigconf,review,anonymous]{acmart}
+
+%% -----------------------------------------------------------------------
+%% Metadata
+%% -----------------------------------------------------------------------
+\acmConference[CHI '27]{ACM CHI Conference on Human Factors in Computing
+  Systems}{April 2027}{Yokohama, Japan}
+\acmISBN{}
+\acmDOI{}
+
+\setcopyright{rightsretained}
+
+%% CCS concepts
+\begin{CCSXML}
+<ccs2012>
+  <concept>
+    <concept_id>10003120.10003121.10003124</concept_id>
+    <concept_desc>Human-centered computing~Human computer interaction (HCI)</concept_desc>
+    <concept_significance>500</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10003120.10003121.10003122.10003334</concept_id>
+    <concept_desc>Human-centered computing~User studies</concept_desc>
+    <concept_significance>300</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10010147.10010178.10010187</concept_id>
+    <concept_desc>Computing methodologies~Natural language processing</concept_desc>
+    <concept_significance>100</concept_significance>
+  </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Human-centered computing~Human computer interaction (HCI)}
+\ccsdesc[300]{Human-centered computing~User studies}
+\ccsdesc[100]{Computing methodologies~Natural language processing}
+
+\keywords{large language models; career preparation; students; perceived
+  employability; interview rehearsal; resume drafting; human-AI interaction;
+  authenticity; deskilling}
+
+%% -----------------------------------------------------------------------
+\title{From Resume Drafting to Interview Rehearsal: Understanding How
+  University Students Use LLMs for Career Preparation}
+%% -----------------------------------------------------------------------
+
+\author{Anonymous Authors}
+\affiliation{%
+  \institution{Anonymous Institution}
+  \city{Anonymous City}
+  \country{Anonymous Country}}
+\email{anonymous@example.com}
+
+%% -----------------------------------------------------------------------
+\begin{document}
+%% -----------------------------------------------------------------------
+
+\begin{abstract}
+Large language models (LLMs) have entered student career-preparation
+workflows, where they are used to draft resumes, rehearse interview answers,
+compare job options, and reduce uncertainty during job search.  Yet existing
+literature does not clearly explain how these systems are embedded across
+the broader ecology of career preparation, nor how students interpret their
+influence on confidence, perceived employability, authenticity, and skill
+development.  We present the design of a survey-first mixed-method study
+that targets university students and recent graduates actively engaged in
+early-career transitions.  To validate the local-first analysis and writing
+pipeline before live data collection, we generated a synthetic dataset
+matching the planned questionnaire schema.  The synthetic results reveal a
+plausible pattern in which LLM use concentrates around resume drafting,
+portfolio polishing, and interview rehearsal; heavier use is associated with
+higher perceived confidence and employability support; authenticity tension
+and deskilling concern increase with use intensity; and students want
+institutional safeguards such as voice preservation, source prompts, and
+reflective comparison features.  We translate these tensions into four
+design implications for student-facing AI career-support systems.  All
+numerical findings are pipeline placeholders and must be replaced with
+empirical data before submission.
+\end{abstract}
+
+\maketitle
+
+%% -----------------------------------------------------------------------
+\section{Introduction}
+%% -----------------------------------------------------------------------
+
+Public discourse about generative AI frequently collapses a complicated
+set of educational and labor-market changes into a single claim: LLMs will
+either help or harm student employment.  That framing is too coarse for
+human-computer interaction research.  What matters for HCI is not whether
+AI moves macro employment statistics in the abstract, but how students
+actually integrate LLMs while preparing resumes, researching roles,
+rehearsing interview answers, comparing career pathways, and deciding how
+much of their own voice to preserve in application materials.
+
+Prior work has already established that generative AI introduces new
+usability and metacognitive demands around prompting, evaluating outputs,
+and calibrating trust~\cite{tankelevitch2024metacognitive}.  Higher-education
+research shows that students perceive both substantial value and substantial
+risk in these tools, including concerns about accuracy, privacy, authenticity,
+and long-term development~\cite{chan2023studentsvoices, jochim2024teachingtesting}.
+
+The career-preparation setting sharpens these tensions considerably.  A
+polished interview answer may increase confidence while simultaneously
+reducing independent reflection.  A rewritten resume bullet may sound
+stronger while making the applicant less certain the application still
+represents them.  Existing work has not yet fully addressed this setting:
+some studies focus on students with disabilities~\cite{atcheson2025disabilitygenai};
+others explore future educational applications through co-design~\cite{prasad2025multimodal};
+still others present narrow technical systems such as AI interview
+simulators~\cite{lee2024vrinterview}.  The closest topical study reports a
+positive association between ChatGPT use and employment
+confidence~\cite{xiao2025employmentconfidence} but does not unpack the
+concrete interaction practices through which that confidence is built,
+misplaced, or negotiated.
+
+This project asks three connected questions.  First, across which
+career-preparation tasks do university students currently use LLMs, and how
+frequently?  Second, how do students perceive those interactions as shaping
+confidence, employability, authenticity, and skill development?  Third,
+what design implications follow for responsible student-facing AI career
+support?
+
+Our contribution is a reproducible end-to-end research pipeline for
+studying LLM-mediated career preparation, including a validated
+questionnaire instrument, a pre-specified analysis plan, a local synthetic
+dry run, and a draft manuscript ready to be populated with real empirical
+data.  The framing explicitly avoids causal claims about objective
+labor-market outcomes.
+
+%% -----------------------------------------------------------------------
+\section{Related Work}
+%% -----------------------------------------------------------------------
+
+\subsection{Metacognitive Demands of Generative AI}
+
+Tankelevitch et al.\ argue that prompting, checking, and deciding whether to
+rely on outputs are fundamentally metacognitive
+activities~\cite{tankelevitch2024metacognitive}.  This framing is directly
+relevant to career preparation, where students must judge not only whether
+an LLM output is fluent but whether it is accurate, appropriate, and
+representative of their actual qualifications.  Schemmer et al.\ extend this
+by showing that appropriate reliance on AI advice depends on how explanations
+shape users' trust calibration~\cite{schemmer2023appropriatereliance}.
+Calibration failure in a career context can mean submitting an application
+that no longer reflects a student's real capabilities.
+
+\subsection{Students and Generative AI in Higher Education}
+
+Chan and Hu report that university students are broadly optimistic about
+generative AI while expressing concerns about accuracy, ethics, privacy, and
+career prospects~\cite{chan2023studentsvoices}.  Jochim and Lenz-Kesekamp
+describe adaptation pressures on both students and teachers and note that
+both groups see opportunity alongside fear and training
+needs~\cite{jochim2024teachingtesting}.  Atcheson et al.\ add an important
+access dimension by showing that students with disabilities use generative
+AI not only for coursework but also for self-advocacy, while navigating
+unclear institutional norms~\cite{atcheson2025disabilitygenai}.  Prasad
+et al.\ show through co-design workshops that students imagine multimodal
+AI as personalized educational support with emphasis on feedback and
+creative exploration~\cite{prasad2025multimodal}.  These studies establish
+the importance of student perspectives but are not centered on career
+preparation as a high-stakes, self-presentation-intensive interaction
+context.
+
+\subsection{AI in Career Preparation and Related Systems}
+
+Adjacent career-oriented systems suggest a fragmented design space.  Lee
+et al.\ present a VR and chatbot-based interview simulator for graduates,
+focusing on one slice of the task ecology~\cite{lee2024vrinterview}.
+Waikar et al.\ describe a generative-AI career-guidance system aimed at
+student advising~\cite{waikar2024careerguidance}.  Xiao and Zheng report a
+positive association between ChatGPT use and employment confidence using
+regression and structural equation modeling on a student
+sample~\cite{xiao2025employmentconfidence}.  Chakrabarty et al.\ warn that
+LLMs can create a false promise of creativity and authorship, a concern that
+maps directly onto resume writing and personal statement
+preparation~\cite{chakrabarty2024artorartifice}.
+
+Together, these works indicate that AI is already entering student career
+support but do not provide a broad account of how students stitch LLMs into
+everyday career-preparation workflows, or where design interventions should
+preserve voice, promote verification, and reduce overreliance.  That is the
+gap this project addresses.
+
+%% -----------------------------------------------------------------------
+\section{Method}
+%% -----------------------------------------------------------------------
+
+\subsection{Study Design}
+
+We designed a survey-first mixed-method study targeting university students
+and recent graduates who are actively preparing for internships, full-time
+jobs, graduate school, or adjacent early-career transitions.
+
+\subsubsection{Questionnaire}
+The main instrument is an online questionnaire administered through a
+platform such as Qualtrics or Wenjuanxing.  It captures (a)~whether and how
+respondents use LLMs for concrete career-preparation tasks, (b)~perceived
+confidence support, employability support, verification behavior,
+authenticity concerns, and deskilling risk, and (c)~scenario judgments and
+open-ended reflections.  The instrument retains both LLM users and non-users
+to study adoption barriers and contrast cases alongside active reliance.
+Details of the full instrument appear in Appendix~\ref{app:survey}.
+
+\subsubsection{Measures}
+Task-level use frequency is assessed with a five-point ordinal scale (Never,
+Once, Monthly, Weekly, Several times per week) for eight career-preparation
+task contexts: resume or CV drafting, cover-letter or personal-statement
+drafting, interview-question rehearsal, career exploration or job
+information search, skill-gap planning, portfolio or project description
+polishing, offer comparison, and networking message drafting.
+
+Core perception constructs are measured with five-point Likert items and
+combined into four scale scores: \textit{confidence support}~(P2, P9, P10),
+\textit{perceived employability support}~(P1, P3, P4), \textit{verification
+behavior}~(P6, P7), and \textit{authenticity tension}~(P5, P8, P11).
+Multi-item constructs will be reported with Cronbach's alpha or McDonald's
+omega before final submission~\cite{bennett2022employability,
+jin2009careerdecision}.
+
+\subsubsection{Follow-up Interviews}
+Respondents may optionally volunteer for a 20--30 minute semi-structured
+interview.  Interviews target mechanisms that scales cannot capture: how
+students decide whether an LLM output still sounds like them, when AI
+reduces uncertainty versus replaces reflection, and what safeguards they
+want from future systems.  Contact information for interviews is stored
+separately from main survey responses.
+
+\subsection{Participants and Recruitment}
+
+The target population consists of undergraduate students, master's students,
+doctoral students, and recent graduates (within 12 months of graduation) who
+are enrolled in higher education in China or a comparable institutional
+context and are currently active in at least one career-preparation task.
+Participants must be 18 years or older with sufficient language proficiency
+to complete the questionnaire.  We target a minimum of 250 valid responses,
+with at least 150 respondents reporting career-related LLM use.  For
+follow-up interviews, we target 12--20 participants or thematic saturation.
+
+Recruitment will use university mailing lists, career-center channels,
+WeChat study groups, and student organization networks.  A pilot test with
+8--12 students will validate wording, completion time, and attention-check
+design before full launch.
+
+\subsection{Synthetic Dry Run}
+
+Because live data collection had not yet begun in this local-first project
+run, we generated a synthetic survey export matching the planned schema and
+approximate study distributions.  The synthetic dataset contained 336 raw
+rows and was analyzed using the same exclusion logic, descriptive statistics,
+and regression pipeline that will later be applied to real exports.  The dry
+run validates file formats, figure generation, the data-cleaning procedure,
+and manuscript structure.  It does not constitute empirical evidence.
+Throughout the remainder of this paper, all reported statistics refer to the
+synthetic dataset and are clearly labeled as such.
+
+%% -----------------------------------------------------------------------
+\section{Results (Synthetic Pipeline Validation)}
+%% -----------------------------------------------------------------------
+
+\textit{All findings in this section are derived from a synthetic dataset
+generated to exercise the analysis pipeline.  They are not evidence about
+real students.}
+
+\subsection{Sample Characteristics}
+
+After applying the predefined exclusion criteria (speed-based and
+attention-check failures), the cleaned synthetic sample contained 319 cases.
+Undergraduate students formed the largest group (63.3\%), followed by
+master's students (22.3\%), recent graduates (9.7\%), and doctoral students
+(4.7\%).  The most common career-preparation contexts were full-time
+employment (34.8\%) and internships (32.3\%).  Overall, 78.7\% of the
+retained sample were classified as LLM users.
+
+\subsection{Task-Level LLM Use Distribution}
+
+Among LLM users, the most common weekly-or-more activities were resume
+drafting (59.4\%), portfolio polishing (53.0\%), and interview rehearsal
+(51.8\%).  Cover-letter writing, information search, and skill-gap planning
+formed a secondary tier, while networking and offer comparison were less
+frequent.  This pattern suggests that LLM engagement concentrates around
+self-presentation and iterative preparation tasks where fluency gains are
+immediately useful and where the cost of a weak draft is perceptible.
+
+\subsection{Group Comparisons}
+
+Synthetic group contrasts suggested a graded relationship between LLM
+engagement and perceived support.  Heavy users reported higher
+confidence-support scores (\textit{M}~=~3.116) and higher perceived
+employability-support scores (\textit{M}~=~3.807) than light users
+(\textit{M}~=~2.662 and 3.057) and non-users (\textit{M}~=~2.319 and
+2.191, respectively).  Verification scores remained similar across groups,
+while authenticity tension increased monotonically with use intensity.
+
+\subsection{Regression Models}
+
+In the synthetic regression predicting perceived employability support, use
+intensity was positively associated with the outcome ($\beta = 0.482$,
+$p < .001$); verification behavior was also positively associated
+($\beta = 0.149$, $p = .029$); and authenticity tension was negatively
+associated ($\beta = -0.182$, $p = .026$).  In the parallel model
+predicting confidence support, use intensity remained a positive predictor
+($\beta = 0.311$, $p < .001$), while authenticity tension was near zero
+in this dry run.  These patterns should be interpreted only as a test of
+the pipeline architecture; direction and magnitude will shift when real data
+are used.
+
+\subsection{Open-Text Themes}
+
+Synthetic open-text responses were constructed to exercise the qualitative
+coding procedure.  The most prevalent themes by construction were desired
+safeguards, authenticity and voice concerns (73.0\%), deskilling or
+dependency concerns (70.2\%), verification and trust (51.1\%), and interview
+rehearsal (55.5\%).
+
+%% -----------------------------------------------------------------------
+\section{Discussion}
+%% -----------------------------------------------------------------------
+
+\subsection{LLMs as Friction Reducers That Compress Reflection}
+
+Even granting that the present findings are synthetic, the dry run is useful
+for sharpening the eventual empirical argument.  Career preparation is not a
+single interaction but a chain of situated tasks in which students repeatedly
+negotiate speed, confidence, authorship, and trust.  The placeholder results
+are consistent with the hypothesis that LLMs will be especially attractive
+in self-presentation tasks --- resume drafting, portfolio polishing, and
+interview rehearsal --- where immediate fluency gains reduce friction and
+perceived preparation gaps.  At the same time, the synthetic theme structure
+suggests that adoption is unlikely to resolve as a simple benefit story.
+Students may accept LLM help precisely where they also most fear losing
+authorship or overfitting themselves to generic AI-generated language.
+
+\subsection{Design Implications}
+
+The expected empirical pattern, supported by related work on metacognitive
+demands~\cite{tankelevitch2024metacognitive} and creative
+authorship~\cite{chakrabarty2024artorartifice}, motivates four design
+implications for student-facing career-support systems.
+
+\paragraph{Authorship preservation.}
+Systems should help students compare their own draft against the AI-generated
+alternative, making the delta explicit rather than silently replacing the
+original text.  Presenting both versions side by side and prompting the
+student to annotate which elements still sound like them supports reflective
+ownership.
+
+\paragraph{Calibrated verification.}
+Systems should distinguish language-polishing tasks from substantive career
+advice and prompt external validation for high-stakes
+recommendations~\cite{schemmer2023appropriatereliance}.  For example, a
+salary negotiation suggestion or a claim about industry norms should carry a
+source-check prompt rather than appearing as confident advice.
+
+\paragraph{Skill-development visibility.}
+Systems should surface what was changed and why, making implicit skill gaps
+explicit rather than hiding them behind polished output.  A student who sees
+that a verb was upgraded can decide whether to learn that register; a student
+who sees only the finished product cannot.
+
+\paragraph{Institutional guidance framing.}
+Career centers and educational institutions may need clearer guidance on
+acceptable versus unacceptable forms of LLM use during application and
+interview preparation.  Platform-level norms alone may not be sufficient
+when employment decisions carry long-term identity stakes.
+
+\subsection{Theoretical Contributions}
+
+This project contributes to the HCI literature by positioning LLM-mediated
+career preparation as an interaction ecology rather than a point tool.  The
+conceptual move from ``LLMs affect employment'' to ``LLMs are embedded in
+the micro-interactions through which students construct career
+representations'' opens a richer design space than macro labor-market
+framing affords.
+
+%% -----------------------------------------------------------------------
+\section{Limitations}
+%% -----------------------------------------------------------------------
+
+The most important limitation of the current manuscript is that all
+numerical findings derive from a synthetic dataset; they are therefore not
+evidence about real students.  Once real data are collected, the study will
+still face several important constraints.  The design relies on self-report
+and cannot establish that LLM use objectively changes employment outcomes.
+Early recruitment is likely to be convenience-based, and a China-first
+sample will shape what can be generalized across cultural and labor-market
+contexts.  Reported LLM behavior may be affected by social desirability,
+hype framing, or students' uncertainty about what counts as legitimate AI
+use.  Cross-sectional data cannot track how perceived benefit or harm changes
+over a job-search cycle.  These limitations reinforce the decision to frame
+claims around reported practices, perceived confidence, and design
+implications rather than causal employment effects.
+
+%% -----------------------------------------------------------------------
+\section{Ethics and Privacy}
+%% -----------------------------------------------------------------------
+
+The study collects minimal personal data and does not require participants
+to upload resumes, employer names, or offer materials.  Survey responses are
+analyzed in aggregate; interview contact information is stored on a separate
+form, separated from main response data by design.  The instrument uses
+neutral wording and allows participants to skip any item, including sensitive
+demographic questions.  The project treats AI use in career preparation as a
+potentially sensitive topic because respondents may worry about stigma
+related to perceived over-reliance or dishonesty.  The consent form
+explicitly frames LLM use as a normal and widespread practice under study,
+not as something requiring justification.
+
+%% -----------------------------------------------------------------------
+\section{Conclusion}
+%% -----------------------------------------------------------------------
+
+We have presented the design, analysis plan, and synthetic dry run for a
+CHI study of how university students integrate LLMs into career-preparation
+workflows.  The study addresses a gap in the HCI literature by connecting
+concrete interaction practices --- resume drafting, interview rehearsal,
+portfolio polishing --- to perceived confidence, employability, and skill
+development, and by translating those findings into actionable design
+implications for student-facing AI career-support systems.  Substantive
+empirical results await real data collection; the present manuscript serves
+as a validated pipeline ready for that next phase.
+
+%% -----------------------------------------------------------------------
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+%% -----------------------------------------------------------------------
+\appendix
+%% -----------------------------------------------------------------------
+
+\section{Survey Instrument}
+\label{app:survey}
+
+The following is the full questionnaire used in this study.  Items are
+numbered to match the analysis plan.  Recommended response scale unless
+otherwise noted: 1~=~Strongly disagree, 5~=~Strongly agree.
+
+\subsection*{Consent}
+
+You are invited to take part in a research study about how university
+students use large language models during career preparation.  Participation
+is voluntary.  You may skip any question or stop at any time.  We do not
+ask you to upload resumes, offer letters, or other sensitive documents.
+Your answers will be analyzed in aggregate.  If you choose to volunteer for
+a follow-up interview, your contact information will be collected separately
+from your survey answers.
+
+\begin{itemize}
+  \item[\textbf{Consent}] I am 18 years old or above and agree to
+    participate. (Yes / No)
+\end{itemize}
+
+\subsection*{Screener}
+
+\begin{itemize}
+  \item[\textbf{S1.}] What best describes you? (Undergraduate student /
+    Master's student / Doctoral student / Graduated within the past 12
+    months / Other)
+  \item[\textbf{S2.}] Are you currently preparing for any of the following?
+    (Select all that apply: Internship applications / Full-time job
+    applications / Graduate school applications / Portfolio or CV
+    preparation / General career exploration / None of the above)
+  \item[\textbf{S3.}] Have you used any LLM tool such as ChatGPT, Kimi,
+    Doubao, Tongyi, Claude, or similar systems in the past 6~months?
+    (Yes / No)
+\end{itemize}
+
+\subsection*{Career Context}
+
+\begin{itemize}
+  \item[\textbf{C1.}] How urgent is your current need for career
+    preparation? (Not urgent / Slightly urgent / Moderately urgent / Very
+    urgent / Extremely urgent)
+  \item[\textbf{C2.}] Which pathway is currently most important to you?
+    (Internship / Full-time employment / Graduate school / Entrepreneurship
+    or freelance / Undecided)
+  \item[\textbf{C3.}] How confident do you currently feel about the next
+    stage of your career transition? (1--5 scale)
+\end{itemize}
+
+\subsection*{LLM Exposure and Use}
+
+\begin{itemize}
+  \item[\textbf{U1.}] Which tools have you used for career-related tasks?
+    (Select all that apply: ChatGPT / Kimi / Doubao / Tongyi--Qwen / Claude
+    / DeepSeek / Other / I have not used LLMs for career-related tasks)
+  \item[\textbf{U2.}] How often have you used LLMs for each of the following
+    tasks in the past 3~months? (Never / Once / Monthly / Weekly / Several
+    times per week) \textit{Tasks}: Resume or CV drafting; Cover-letter or
+    personal-statement drafting; Interview-question rehearsal; Career
+    exploration or job information search; Skill-gap planning; Portfolio or
+    project description polishing; Comparing offers or options; Networking
+    message drafting.
+  \item[\textbf{U3.}] When using LLMs for career preparation, how do you
+    usually interact with them? (Select all that apply: Ask for first drafts
+    / Rewrite my own text / Brainstorm ideas / Simulate interview questions /
+    Summarize job descriptions / Ask for career advice / Translate or polish
+    language / Compare alternatives)
+\end{itemize}
+
+\subsection*{Main Perception Items}
+
+\begin{itemize}
+  \item[\textbf{P1.}] Using LLMs helps me start career-preparation tasks
+    faster.
+  \item[\textbf{P2.}] Using LLMs makes me feel more confident about resumes,
+    applications, or interviews.
+  \item[\textbf{P3.}] Using LLMs helps me notice missing skills or knowledge
+    I should improve.
+  \item[\textbf{P4.}] LLM outputs often sound more polished than what I
+    could write on my own.
+  \item[\textbf{P5.}] I worry that relying on LLMs may weaken my own
+    long-term career skills.
+  \item[\textbf{P6.}] I often verify important LLM advice with other sources
+    before using it.
+  \item[\textbf{P7.}] I trust LLM output for low-stakes editing more than
+    for high-stakes career decisions.
+  \item[\textbf{P8.}] LLM use sometimes makes it harder to tell whether an
+    application still reflects my real voice.
+  \item[\textbf{P9.}] I feel more prepared for interviews after practising
+    with an LLM.
+  \item[\textbf{P10.}] I feel that LLMs reduce uncertainty during career
+    planning.
+  \item[\textbf{P11.}] I sometimes accept LLM suggestions too quickly
+    without enough reflection.
+  \item[\textbf{P12.}] Universities should provide clearer guidance on
+    appropriate LLM use in career preparation.
+\end{itemize}
+
+\subsection*{Scenario-Based Judgments}
+
+For each scenario, rate on a 1--5 scale (1 = completely unacceptable,
+5 = completely acceptable) and a separate 1--5 scale (1 = not risky,
+5 = very risky):
+
+\begin{itemize}
+  \item[\textbf{Sc-A.}] A student asks an LLM to rewrite bullet points on
+    a resume that the student already drafted.
+  \item[\textbf{Sc-B.}] A student asks an LLM to generate answers to
+    interview questions and memorizes them word-for-word.
+  \item[\textbf{Sc-C.}] A student asks an LLM to compare two job offers and
+    identify trade-offs.
+  \item[\textbf{Sc-D.}] A student follows career advice from an LLM without
+    checking any outside source.
+\end{itemize}
+
+\subsection*{Attention Checks}
+
+\begin{itemize}
+  \item[\textbf{AC1.}] To show that you are reading carefully, please select
+    ``Agree'' for this item.
+  \item[\textbf{AC2.}] Which of the following is \emph{not} a
+    career-preparation task? (Resume editing / Interview rehearsal / Job
+    search planning / \textbf{Boiling water})
+\end{itemize}
+
+\subsection*{Open-Ended Questions}
+
+\begin{itemize}
+  \item[\textbf{O1.}] Describe one way LLMs have been genuinely useful in
+    your career preparation.
+  \item[\textbf{O2.}] Describe one situation in which LLM use felt risky,
+    misleading, or unhelpful.
+  \item[\textbf{O3.}] If a university career-support system used LLMs, what
+    safeguards or features would you want?
+\end{itemize}
+
+\subsection*{Demographics}
+
+\begin{itemize}
+  \item[\textbf{D1.}] Age range
+  \item[\textbf{D2.}] Gender identity
+  \item[\textbf{D3.}] Field of study
+  \item[\textbf{D4.}] Degree level
+  \item[\textbf{D5.}] First-generation college student status (optional)
+  \item[\textbf{D6.}] Self-rated family economic status (optional)
+  \item[\textbf{D7.}] Urban / suburban / rural background (optional)
+\end{itemize}
+
+\subsection*{Debrief}
+
+Thank you for participating.  This study examines how students use LLMs
+during career preparation.  The research focuses on perceived confidence,
+practices, and design implications, not on proving that AI objectively
+causes better employment outcomes.
+
+\end{document}

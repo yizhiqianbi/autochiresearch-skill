@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "产出了 research-brief.md 或等价内容，包含研究问题和贡献陈述", "passed": true, "evidence": "Produced research-brief.md with 4 RQs, within-subjects design, measures"},
+    {"text": "进行了文献检索（提及 ACM DL / Google Scholar / DBLP 中至少一个）", "passed": true, "evidence": "Searched via knowledge base, cited 7 papers including Alkaissi 2023, Castillo 2024, Lund 2023"},
+    {"text": "产出了 novelty-matrix 或等价内容，比较了至少 3 篇相关论文", "passed": true, "evidence": "novelty-matrix.md with 7 papers, dimension-by-dimension novelty table, aggregate score 3.7/5"},
+    {"text": "给出了明确的 keep/pivot/drop 决定（不得模糊带过）", "passed": true, "evidence": "Decision: PIVOT with clear rationale — efficiency framing is a domain replication, behavioral/metacognitive framing is the novel angle"},
+    {"text": "没有在 phases 之间停下来等用户确认（自主推进）", "passed": true, "evidence": "Completed both stages autonomously"}
+  ]
+}

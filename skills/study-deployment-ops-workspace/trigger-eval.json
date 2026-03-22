@@ -1,0 +1,82 @@
+[
+  {
+    "query": "study-spec和survey都做好了，帮我准备数据收集，我想把链接自己发给参与者，不需要服务器",
+    "should_trigger": true
+  },
+  {
+    "query": "问卷app在本地跑起来了，帮我做一个smoke test，确认参与者填写流程没问题",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我生成手动分发问卷用的CSV模板和分发指南",
+    "should_trigger": true
+  },
+  {
+    "query": "参与者把填好的CSV发给我了，帮我把数据导回到llm这个项目",
+    "should_trigger": true
+  },
+  {
+    "query": "需要把这个HCI survey部署到我们实验室的服务器上，要HTTPS和数据备份",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我写deployment-plan.md，包括数据收集监控指标和stop criteria",
+    "should_trigger": true
+  },
+  {
+    "query": "collection准备好了，帮我写distribution-guide.md，把招募渠道和参与者说明都写进去",
+    "should_trigger": true
+  },
+  {
+    "query": "问卷平台（问卷星）的数据导出之后怎么导回到本地项目里，帮我写操作流程",
+    "should_trigger": true
+  },
+  {
+    "query": "study开始收数据了，帮我设置一个每日监控，看完成率和注意力检查通过率",
+    "should_trigger": true
+  },
+  {
+    "query": "研究设计完成了，帮我打包一个可以发给外部研究助理的数据收集包",
+    "should_trigger": true
+  },
+  {
+    "query": "novelty matrix说keep，帮我设计这个研究需要什么类型的study：问卷还是原型实验",
+    "should_trigger": false
+  },
+  {
+    "query": "数据已经全部收回来了，帮我做exclusion和统计分析，生成results_summary.md",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我在ACM DL上搜索关于mobile form UX的相关论文",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我从头到尾做一个CHI研究，idea是触觉反馈对移动端体验的影响",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我在AWS上部署一个通用的Flask后端，不是研究用途，是商业项目",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我写一个Python脚本，批量下载arXiv上的HCI论文PDF",
+    "should_trigger": false
+  },
+  {
+    "query": "参与者数据里有几个离群值，帮我决定exclusion rules怎么定",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把这个研究的consent form改得更友好一些，目前版本太官方了",
+    "should_trigger": false
+  },
+  {
+    "query": "需要建一个Notion数据库来跟踪我的研究项目进度",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我用playwright写一个自动化测试脚本，测试电商网站的结账流程",
+    "should_trigger": false
+  }
+]

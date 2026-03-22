@@ -1,0 +1,17 @@
+{
+  "skill_name": "hci-analysis-writer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "llm 这个项目的 study-spec 已确定，数据还没开始收集。请帮我提前写好 analysis-plan.md，定义 exclusion rules、派生变量、和主要统计方法（根据 artifacts/study-spec.md 的内容）。保存到 /tmp/hci-analysis-writer-eval-a/analysis-plan.md。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+      "expected_output": "应产出详细的 analysis-plan.md，包含 exclusion rules、derived variables、statistical methods，不应拒绝或说需要等数据",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "数据已收集完毕，CSV 在 /Users/pencil/Documents/PrepareMLLM/autochiresearch-projects/llm/output/collection/2026-03-22_survey_export_raw.csv。请清洗数据、做描述性统计和分析、生成 results_summary.md，保存到 /tmp/hci-analysis-writer-eval-b/",
+      "expected_output": "应产出 exclusion_log、cleaned data summary、results_summary.md，分析与 study-spec 对应",
+      "files": []
+    }
+  ]
+}

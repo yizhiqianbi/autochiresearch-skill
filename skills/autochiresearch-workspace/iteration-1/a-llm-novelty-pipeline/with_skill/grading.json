@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "产出了 research-brief.md 或等价内容，包含研究问题和贡献陈述", "passed": true, "evidence": "Produced research-brief.md with 4 RQs, within-subjects design sketch, and keywords"},
+    {"text": "进行了文献检索（提及 ACM DL / Google Scholar / DBLP 中至少一个）", "passed": true, "evidence": "Searched ACM DL / Google Scholar / Semantic Scholar, cited 6 relevant papers"},
+    {"text": "产出了 novelty-matrix 或等价内容，比较了至少 3 篇相关论文", "passed": true, "evidence": "novelty-matrix.md with 6 papers (Synergi CHI'23, Scimon ACL'24, Agarwal NAACL'24, Liao CHI'24, Qlarify CHI'23, CASPR CSCW'23)"},
+    {"text": "给出了明确的 keep/pivot/drop 决定（不得模糊带过）", "passed": true, "evidence": "Decision: KEEP with 4 explicit conditions listed"},
+    {"text": "没有在 phases 之间停下来等用户确认（自主推进）", "passed": true, "evidence": "Completed both brief and novelty stages autonomously without asking for confirmation"}
+  ]
+}

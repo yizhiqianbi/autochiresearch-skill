@@ -1,54 +1,66 @@
 ---
 name: chi-project-runner
-description: Backward-compatible alias for the AutoCHIResearch local-first workflow. Use when the user asks for a full CHI or HCI project to be driven from one raw idea through literature retrieval, novelty judgment, survey or prototype design, local preview, manual external distribution prep, CSV re-import, local analysis, and LaTeX drafting inside the AutoCHIResearch repository.
+description: >
+  Backward-compatible alias for the AutoCHIResearch local-first workflow. Use when the user
+  invokes "chi-project-runner" by name, or when starting a full HCI project pipeline with older
+  prompts. Follows the same local-first, idea-to-paper pipeline as $autochiresearch — literature
+  retrieval, novelty judgment, study design, deployment prep, analysis, and LaTeX drafting inside
+  an AutoCHIResearch workspace. If in doubt between chi-project-runner and autochiresearch, use
+  autochiresearch — this skill exists only to keep older prompts working.
 ---
 
 # CHI Project Runner
 
-Use this skill as a compatibility entrypoint for the same workflow now defined by `$autochiresearch`. Keep old prompts working, but follow the newer AutoCHIResearch local-first rules.
+This skill is a compatibility entrypoint for the same workflow now defined by `$autochiresearch`.
+It exists so that older prompts and bookmarks that reference `chi-project-runner` continue to work
+without changes.
+
+**Follow all rules and logic from `$autochiresearch` exactly.** The only difference is the name.
+
+## Workspace Resolution
+
+Reuse `../autochiresearch/scripts/resolve_autochi_repo.py`.
+If no workspace is found, read `../autochiresearch/references/workspace-bootstrap.md`.
 
 ## Workflow
 
-1. Initialize a new project:
+Identical to `$autochiresearch`:
+
+1. Resolve the workspace root.
+2. Initialize a new project when needed:
    - `python3 scripts/autochi.py init --idea "<raw idea>"`
-2. Read the generated project `README.md`, `README.zh-CN.md`, `STATE.json`, and the root `program.md`.
-3. Run `python3 scripts/autochi.py status <project-path>` to identify the current phase and stage.
-4. Complete the current stage artifact and any support files it requires.
-5. Run `python3 scripts/autochi.py sync <project-path>` after each stage update.
-6. Continue until the tracked phases are complete or the novelty gate forces a pivot or drop decision.
+3. Read the generated project `README.md`, `README.zh-CN.md`, `STATE.json`, and the root `program.md`.
+4. Run `python3 scripts/autochi.py status <project-path>` to identify the current phase and stage.
+5. Complete the current stage artifact and any support files it requires.
+6. Run `python3 scripts/autochi.py sync <project-path>` after each stage update.
+7. Continue until all phases are complete or the novelty gate forces a pivot or drop decision.
 
 ## Phase Routing
 
 ### Pre
-
-- `brief` -> fill `artifacts/research-brief.md`
-- `novelty` -> use `citation-management` + `chi-topic-scout`
+- `brief` → fill `artifacts/research-brief.md`
+- `novelty` → prefer `citation-management` + `chi-topic-scout` if available
 
 ### Mid
-
-- `study` -> use `hci-study-designer`
-- `deployment` -> treat this as local packaging, flow validation, manual distribution prep, or optional self-hosting; use `study-deployment-ops` + `playwright`
-- `analysis` -> use `hci-analysis-writer`
+- `study` → prefer `hci-study-designer` if available
+- `deployment` → local packaging and collection prep by default; prefer `study-deployment-ops` + `playwright`; server only if user explicitly requests it
+- `analysis` → prefer `hci-analysis-writer` if available
 
 ### Post
-
-- `paper` -> use `scientific-writing` + `citation-management`
+- `paper` → prefer `scientific-writing` + `citation-management` if available
 
 ## Rules
 
-- Treat the user as idea provider by default.
-- Do not skip the novelty matrix.
+- Treat the user as idea provider by default. Do not stop between phases unless blocked.
+- Do not skip the novelty gate.
 - Do not move to study design before the topic is marked keep.
-- Decide within `Mid` whether the project actually needs a questionnaire, a user study, a prototype, or a mixed path.
-- Default to local-first operation. Do not require a server unless the user explicitly wants one.
-- If server credentials or API keys are missing, prepare the local package, manual distribution path, CSV import path, and blocker list instead of blocking silently.
-- When humans distribute through an external platform, preserve a canonical schema and import returned CSV files back into the local project.
+- Default to local-first. Do not require a server unless the user explicitly wants one.
+- Keep generated outputs under `output/`; see `../autochiresearch/references/output-convention.md`.
 - Treat the generated project directory in `projects/` as the source of truth for the run.
-- Keep the root-level templates and skills reusable; put idea-specific work inside the generated project.
 
-## Outputs
+## Minimum Outputs
 
-At minimum, leave each project with:
+Same as `$autochiresearch`:
 
 - `artifacts/research-brief.md`
 - `artifacts/novelty-matrix.md`
@@ -58,9 +70,4 @@ At minimum, leave each project with:
 - `paper/paper-brief.md`
 - `literature/references.bib`
 - `paper/main.tex`
-
-When the project uses manual external distribution, also leave:
-
-- a distribution guide under `studies/`
-- a canonical CSV template or import script under `analysis/`
-- reproducible local analysis outputs
+- `output/README.md`

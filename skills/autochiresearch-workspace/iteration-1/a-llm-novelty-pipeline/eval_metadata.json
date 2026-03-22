@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "a-llm-novelty-pipeline",
+  "prompt": "我有一个 HCI 研究想法：对比 LLM 辅助 vs 传统检索下 HCI 研究生做文献综述的效率差异。请用 AutoCHIResearch 流程，把这个想法推进到 novelty gate 为止（完成 brief 和 novelty 两个 stage），给我一个 keep/pivot/drop 判断。workspace 路径：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+  "assertions": [
+    {"text": "产出了 research-brief.md 或等价内容，包含研究问题和贡献陈述"},
+    {"text": "进行了文献检索（提及 ACM DL / Google Scholar / DBLP 中至少一个）"},
+    {"text": "产出了 novelty-matrix 或等价内容，比较了至少 3 篇相关论文"},
+    {"text": "给出了明确的 keep/pivot/drop 决定（不得模糊带过）"},
+    {"text": "没有在 phases 之间停下来等用户确认（自主推进）"}
+  ]
+}

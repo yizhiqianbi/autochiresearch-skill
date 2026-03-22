@@ -1,0 +1,8 @@
+{
+  "expectations": [
+    {"text": "检索了 ACM DL 或 IEEE Xplore（至少一个）", "passed": true, "evidence": "Covered ACM DL (CHI, UIST, ETRA, ASSETS, IMWUT, MobileHCI) and IEEE Xplore (IEEE VR, ISMAR); 15+ queries"},
+    {"text": "产出了 novelty matrix", "passed": true, "evidence": "novelty-matrix.md with 10 dimensions rated DONE/OPEN"},
+    {"text": "比较了至少 3 篇相关论文", "passed": true, "evidence": "8 papers in related-papers-table.md including EyeSwipe CHI'16, GazeType ETRA'18, Yu et al. CHI'19"},
+    {"text": "给出了明确的 keep/pivot/drop 决定", "passed": true, "evidence": "Decision: PIVOT with 4 specific pivot options; Pivot 1 (LLM-augmented gaze VR) recommended as strongest"}
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "novelty gate通过了，research topic是LLM工具对HCI学生文献综述效率的影响，帮我设计研究方案",
+    "should_trigger": true
+  },
+  {
+    "query": "这个研究应该做survey还是原型实验？研究问题是老年人用语音助手完成日常任务的可用性",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我写一份完整的consent form，研究是关于VR眼动追踪文本输入的用户实验",
+    "should_trigger": true
+  },
+  {
+    "query": "需要一个screener问卷，筛选在过去6个月内用过ChatGPT辅助写作的大学生",
+    "should_trigger": true
+  },
+  {
+    "query": "研究设计确认了是原型评估，帮我写task script和completion markers",
+    "should_trigger": true
+  },
+  {
+    "query": "这个study的stop criteria和exclusion rules怎么定，是个survey研究，目标N=300",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我设计attention checks，要能区分认真作答和随机点击的参与者",
+    "should_trigger": true
+  },
+  {
+    "query": "pilot study的checklist怎么做，需要检查哪些方面才能决定可以full launch",
+    "should_trigger": true
+  },
+  {
+    "query": "我要做一个gameplay study研究触觉反馈，帮我设计post-play questionnaire和logged events",
+    "should_trigger": true
+  },
+  {
+    "query": "study spec里的measurement plan应该包含哪些内容，这是一个混合方法研究",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我搜索关于触觉反馈HCI的相关文献，看看novelty在哪里",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把调查收回来的数据清洗一下，做描述性统计",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把整个CHI研究流程走一遍，从idea到paper，我只提供主题",
+    "should_trigger": false
+  },
+  {
+    "query": "问卷已经部署了，帮我监控数据收集进度，看看有没有异常",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我设计一个市场调研问卷，研究消费者对新款手机的购买意愿",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我写一个React前端组件，实现一个多步骤的调查问卷界面",
+    "should_trigger": false
+  },
+  {
+    "query": "这个idea的novelty还不确定，帮我先做个文献检索再说要不要做study",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把study-spec.md翻译成英文，准备提交IRB申请",
+    "should_trigger": false
+  },
+  {
+    "query": "需要招募50个用户测试我的手机app，帮我写一份用户招募广告",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我做一个NPS调查来评估我们产品的用户满意度",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "a-precollection-plan",
+  "prompt": "projects/llm 的 study-spec 已确定，数据还没开始收集。请帮我提前写好 analysis-plan.md，定义 exclusion rules、派生变量、和主要统计方法（根据 artifacts/study-spec.md 的内容）。保存到 /tmp/hci-analysis-writer-eval-a/analysis-plan.md。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+  "assertions": [
+    {"text": "产出了 analysis-plan.md 或等价文档（没有因为数据未收集而拒绝）"},
+    {"text": "定义了 inclusion/exclusion rules"},
+    {"text": "定义了派生变量（如复合量表分数、任务完成率等）"},
+    {"text": "指定了统计方法（如描述统计、回归、t-test 等）"},
+    {"text": "提到了在数据收集前锁定 exclusion rules 的重要性"}
+  ]
+}

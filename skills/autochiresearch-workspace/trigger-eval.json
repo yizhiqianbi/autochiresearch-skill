@@ -1,0 +1,82 @@
+[
+  {
+    "query": "我有个idea想做CHI研究：探究LLM辅助下研究生的文献综述效率差异。你帮我把整个流程走一遍吧，我不想一步步告诉你该做什么。",
+    "should_trigger": true
+  },
+  {
+    "query": "继续 llm 这个autochiresearch项目，STATE.json说现在在novelty stage，帮我继续不要问我。",
+    "should_trigger": true
+  },
+  {
+    "query": "$autochiresearch，idea是：老年人使用语音助手完成日常任务的可用性研究",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我把这个HCI想法从零做到可以投稿：研究触觉反馈对移动端表单填写体验的影响，local-first，不要服务器",
+    "should_trigger": true
+  },
+  {
+    "query": "我要做一个关于AI辅助编程工具对开发者flow state影响的CHI研究，你来全程驱动，我只提供idea",
+    "should_trigger": true
+  },
+  {
+    "query": "use $autochiresearch to run the full HCI research pipeline for my idea about gaze-based text entry in VR",
+    "should_trigger": true
+  },
+  {
+    "query": "这个AutoCHIResearch workspace的projects/haptic目录卡住了，help me continue from the current stage",
+    "should_trigger": true
+  },
+  {
+    "query": "我想做一篇CHI paper，idea是对比两种问卷设计方式对完成率的影响。帮我把brief、novelty、study design都做完，中途不要等我确认。",
+    "should_trigger": true
+  },
+  {
+    "query": "novelty-matrix.md做好了说keep，帮我继续做mid phase，包括study design和deployment prep",
+    "should_trigger": true
+  },
+  {
+    "query": "我有一个HCI研究idea，一个人搞不定全套流程，能帮我从文献开始一路到出paper draft吗",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我把这份CSV里的调查数据做统计分析，看看LLM使用频率和就业信心的相关性",
+    "should_trigger": false
+  },
+  {
+    "query": "搜一下'手势交互+老年人'这个方向在ACM DL上有没有被做烂，给我novelty评估",
+    "should_trigger": false
+  },
+  {
+    "query": "study spec定好了，帮我把问卷本地跑起来预览，不用部署服务器",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我设计一个关于VR中眼动追踪文本输入的HCI研究问卷，novelty已经确认了",
+    "should_trigger": false
+  },
+  {
+    "query": "我的analysis-plan.md里的exclusion rules需要修改，帮我更新一下",
+    "should_trigger": false
+  },
+  {
+    "query": "写一段Python代码，读取CSV然后用pandas做描述性统计",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我找几篇最近关于LLM in HCI的综述论文，不用做研究，就是想看看",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把这个LaTeX论文的Related Work章节扩充一下，加几篇最新的引用",
+    "should_trigger": false
+  },
+  {
+    "query": "我想部署一个Flask web应用到服务器，需要nginx和HTTPS配置",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我设计一个用户调研方案，我是做市场营销的，想了解消费者对新产品的态度",
+    "should_trigger": false
+  }
+]

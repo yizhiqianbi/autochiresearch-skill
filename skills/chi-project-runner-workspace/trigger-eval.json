@@ -1,0 +1,82 @@
+[
+  {
+    "query": "用chi-project-runner帮我把'触觉反馈UI对移动端表单填写体验'这个idea跑到study spec完成",
+    "should_trigger": true
+  },
+  {
+    "query": "chi-project-runner继续llm，从当前stage开始，不要问我",
+    "should_trigger": true
+  },
+  {
+    "query": "run chi-project-runner for my HCI idea about AI-assisted literature review",
+    "should_trigger": true
+  },
+  {
+    "query": "用chi-project-runner做一个完整的novelty check + study design",
+    "should_trigger": true
+  },
+  {
+    "query": "chi-project-runner init --idea '老年人语音助手可用性研究'",
+    "should_trigger": true
+  },
+  {
+    "query": "我以前一直用chi-project-runner，帮我继续之前的HCI项目",
+    "should_trigger": true
+  },
+  {
+    "query": "这个$chi-project-runner的workflow怎么用，我有个新idea想做CHI研究",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我检索这个研究方向的文献，看看novelty在哪，'gesture interaction for elderly'",
+    "should_trigger": false
+  },
+  {
+    "query": "收回来的数据帮我做分析，CSV在output/collection里",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把研究部署出去，做好本地预览和分发材料",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我做一个完整的CHI研究流程，idea是VR中的社交互动体验",
+    "should_trigger": false
+  },
+  {
+    "query": "novelty确认keep了，帮我设计研究方案",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我写一个Python脚本处理CSV数据",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我找关于mobile UX的最新论文",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把这篇论文的Results section改写得更清晰",
+    "should_trigger": false
+  },
+  {
+    "query": "I need help setting up a React project for a web app",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我设计一个市场调研问卷来了解用户对电商平台的满意度",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我部署一个Django应用到AWS，配置好RDS和S3",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我分析一下这个用户访谈的录音，提取关键主题",
+    "should_trigger": false
+  },
+  {
+    "query": "autochiresearch帮我把这个HCI idea跑一遍全流程",
+    "should_trigger": false
+  }
+]

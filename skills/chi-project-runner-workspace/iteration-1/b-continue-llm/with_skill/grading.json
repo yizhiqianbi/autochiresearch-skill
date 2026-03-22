@@ -1,0 +1,7 @@
+{
+  "expectations": [
+    {"text": "读取了 STATE.json 来确定当前阶段", "passed": true, "evidence": "Explicitly read STATE.json and identified current_stage: 'done'"},
+    {"text": "继续了正确的 stage（不是重新开始）", "passed": true, "evidence": "Did not restart from beginning; identified next_action field pointing to manuscript polishing"},
+    {"text": "产出了该 stage 对应的 artifact", "passed": true, "evidence": "Produced stage-summary.md and main-polished.tex with 9 specific improvements (ACM metadata, abstract, conclusion, future work, appendix)"}
+  ]
+}

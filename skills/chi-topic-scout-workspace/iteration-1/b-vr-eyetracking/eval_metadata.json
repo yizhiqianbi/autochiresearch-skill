@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "b-vr-eyetracking",
+  "prompt": "我想研究在 VR 环境里用眼动追踪辅助文本输入的 HCI 方向。查一下 ACM DL 和 IEEE Xplore，看看这个方向的 novelty 在哪，给我一个新颖性矩阵和建议。保存到 /tmp/chi-topic-scout-eval-b/",
+  "assertions": [
+    {"text": "检索了 ACM DL 或 IEEE Xplore（至少一个）"},
+    {"text": "产出了 novelty matrix"},
+    {"text": "比较了至少 3 篇相关论文"},
+    {"text": "给出了明确的 keep/pivot/drop 决定"}
+  ]
+}

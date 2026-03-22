@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "提供了本地运行命令（如 python3 app.py run）而非 HTTPS/nginx/服务器配置", "passed": true, "evidence": "local-run-instructions.md explains local preview via VS Code/pandoc/terminal; first line of deployment-plan.md: 'No HTTPS configuration, reverse proxy, or server process is needed'"},
+    {"text": "产出或描述了 distribution-guide.md 的内容（如何手动分发给参与者）", "passed": true, "evidence": "distribution-guide.md covers 7 recruitment channels, 3 message templates"},
+    {"text": "提供了 CSV 模板或 import_flat_csv.py 相关说明", "passed": true, "evidence": "data-export-import.md covers column-mapping, import script, file naming conventions"},
+    {"text": "产出了 deployment-plan.md 或等价文档", "passed": true, "evidence": "deployment-plan.md produced"},
+    {"text": "没有出现 HTTPS、SSL、nginx、Docker、云服务等服务器部署内容", "passed": true, "evidence": "Explicitly states no HTTPS/server needed; all instructions are for external platform + local storage. NOTE: old skill complied because user explicitly said 'no server' — default behavior not tested here"}
+  ]
+}

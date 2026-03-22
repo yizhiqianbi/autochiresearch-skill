@@ -1,0 +1,17 @@
+{
+  "skill_name": "study-deployment-ops",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "llm 这个项目的 study spec 已完成。请帮我准备数据收集环境。我不想部署到服务器——我打算自己把问卷链接发给参与者。请准备本地预览方案、手动分发材料、以及数据导出/导入流程。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+      "expected_output": "应产出本地运行说明（非服务器部署）、distribution-guide.md、CSV 模板、deployment-plan.md。不应出现 HTTPS/nginx/服务器配置",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "llm 这个项目的问卷在本地已可以跑了。帮我写好整个数据收集流程：怎么导出数据、怎么把参与者填回来的 CSV 导回到项目里。我自己发链接，不需要服务器。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+      "expected_output": "应产出 export 流程文档、import_flat_csv.py 用法说明、manual_template.csv 说明，不应出现服务器相关配置",
+      "files": []
+    }
+  ]
+}

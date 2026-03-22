@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "a-haptic-feedback",
+  "prompt": "用 chi-project-runner 帮我把「触觉反馈 UI 对移动端表单填写体验」这个 HCI 想法推进到 study spec 完成（包含 Pre 和 Mid/study 阶段）。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+  "assertions": [
+    {"text": "初始化了一个新项目或在已有目录下工作"},
+    {"text": "完成了 Pre phase（brief + novelty）"},
+    {"text": "在 novelty gate 后才进入 study 设计"},
+    {"text": "产出了 study-spec.md 或等价内容"},
+    {"text": "保持了 local-first（没有要求服务器）"}
+  ]
+}

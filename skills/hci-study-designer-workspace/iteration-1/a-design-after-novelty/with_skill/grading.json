@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "产出了 study-spec.md 或等价内容", "passed": true, "evidence": "study-spec.md produced (9.3 KB), covers 3 RQs, participant spec N=24, session structure, measures, power analysis"},
+    {"text": "明确说明了研究方法选择（survey/实验/混合等）及理由", "passed": true, "evidence": "Chose within-subjects controlled experiment + interaction logging; justified: behavioral claim cannot rely on self-report alone; diary study rejected for confound reasons"},
+    {"text": "包含了 consent 或 data handling 说明", "passed": true, "evidence": "consent.md (8 KB) covers voluntary participation, compensation, data handling, IRB contact, dual signature"},
+    {"text": "定义了 stop criteria（目标 N 或截止条件）", "passed": true, "evidence": "5 stop criteria: technical failure >25%, attrition >30%, adverse event, carryover in pilot, ceiling effect in pilot; normal stop at N=24"},
+    {"text": "包含了 attention checks 或 screener 设计", "passed": true, "evidence": "survey-draft.md includes 10-item screener with routing logic and 2 embedded attention checks with correct-response keys"}
+  ]
+}

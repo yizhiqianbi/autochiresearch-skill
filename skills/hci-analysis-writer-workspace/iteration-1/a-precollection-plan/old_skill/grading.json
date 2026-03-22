@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "产出了 analysis-plan.md 或等价文档（没有因为数据未收集而拒绝）", "passed": true, "evidence": "Produced analysis-plan.md, BUT with explicit friction note: 'The hci-analysis-writer skill is designed for use after data collection is complete... This document is produced at the pre-collection stage as a registered analysis plan.' — agent worked around the conflict"},
+    {"text": "定义了 inclusion/exclusion rules", "passed": true, "evidence": "9 exclusion rules in two families: hard eligibility (EX-01 to EX-04) and data-quality (EX-05 to EX-09)"},
+    {"text": "定义了派生变量（如复合量表分数、任务完成率等）", "passed": true, "evidence": "llm_use_freq_composite, tool_diversity, 5 perceptual composites, verification behavior index, AI literacy, career stage"},
+    {"text": "指定了统计方法（如描述统计、回归、t-test 等）", "passed": true, "evidence": "Mann-Whitney U, Spearman correlations, OLS regression, chi-square, Braun & Clarke thematic analysis"},
+    {"text": "提到了在数据收集前锁定 exclusion rules 的重要性", "passed": true, "evidence": "Noted that departures from plan must be documented; pre-registration framing mentioned"}
+  ]
+}

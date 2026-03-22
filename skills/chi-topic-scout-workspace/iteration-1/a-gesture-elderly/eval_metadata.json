@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "a-gesture-elderly",
+  "prompt": "帮我查一下「手势交互 + 老年用户」这个 HCI 方向的新颖性。覆盖 ACM DL、DBLP、Google Scholar。给我一个相关文献对比表、novelty matrix，以及 keep/pivot/drop 建议（要有明确结论，不要模糊）。保存到 /tmp/chi-topic-scout-eval-a/",
+  "assertions": [
+    {"text": "覆盖了至少 2 个数据库（ACM DL、DBLP、Google Scholar 中的至少 2 个）"},
+    {"text": "产出了相关文献对比表（包含 method、sample、findings 等字段）"},
+    {"text": "产出了 novelty matrix"},
+    {"text": "给出了明确的 keep/pivot/drop 决定（非模糊建议）"},
+    {"text": "识别了具体的 novelty gap（不仅是泛泛而谈）"}
+  ]
+}

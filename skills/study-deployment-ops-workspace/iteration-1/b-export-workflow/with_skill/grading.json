@@ -1,0 +1,8 @@
+{
+  "expectations": [
+    {"text": "描述了数据导出路径（output/collection 或等价目录）", "passed": true, "evidence": "Section 4 covers exact filename convention (YYYY-MM-DD_survey_export_raw.csv) and target dir output/collection/"},
+    {"text": "说明了如何导入外部 CSV（import_flat_csv.py 或等价方法）", "passed": true, "evidence": "Section 6 shows exact import command with --input flag; section 5 covers column remapping"},
+    {"text": "没有要求或建议服务器部署", "passed": true, "evidence": "Section 2: 'you distribute it yourself, nothing to configure here'; no server content anywhere"},
+    {"text": "说明了 raw 数据和 cleaned 数据的分离存储", "passed": true, "evidence": "Section 7 explicit: output/collection/ is raw+immutable, output/analysis/ is derived+regenerable; rule: raw file never edited after saving"}
+  ]
+}

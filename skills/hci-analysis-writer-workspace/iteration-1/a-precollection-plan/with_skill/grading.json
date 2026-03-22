@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {"text": "产出了 analysis-plan.md 或等价文档（没有因为数据未收集而拒绝）", "passed": true, "evidence": "Produced analysis-plan.md cleanly with no friction language; explicitly structured as Phase 1 Pre-Collection Planning"},
+    {"text": "定义了 inclusion/exclusion rules", "passed": true, "evidence": "6 locked exclusion rules: EX-01 screener failure, EX-02 attention check 2+ misses, EX-03 speeders <4min, EX-04 straight-lining, EX-05 bot/duplicate, EX-06 >50% missing"},
+    {"text": "定义了派生变量（如复合量表分数、任务完成率等）", "passed": true, "evidence": "10 derived variables defined with explicit computation rules including LLMF composite, 5 outcome composites, VBI, ACS, PDS"},
+    {"text": "指定了统计方法（如描述统计、回归、t-test 等）", "passed": true, "evidence": "t-test/Mann-Whitney, OLS regression with covariates, Spearman correlations, chi-square, Braun & Clarke thematic analysis; alpha=.05, Bonferroni correction"},
+    {"text": "提到了在数据收集前锁定 exclusion rules 的重要性", "passed": true, "evidence": "Section header notes pre-registration purpose; deviation log pre-populated but empty as required"}
+  ]
+}

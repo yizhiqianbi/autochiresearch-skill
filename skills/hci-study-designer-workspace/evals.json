@@ -1,0 +1,17 @@
+{
+  "skill_name": "hci-study-designer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "novelty gate 已通过（主题：LLM 工具对 HCI 学生文献综述效率的影响，决定 keep）。请帮我设计这个研究，包括选择研究方法、写 study-spec.md、问卷草稿、consent 和 stop criteria。保存到 /tmp/hci-study-designer-eval-a/",
+      "expected_output": "应产出 study-spec.md、问卷草稿、consent、pilot checklist，研究方法选择有据可查",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我想研究 AI 辅助编程工具对开发者 flow state 的影响。还没有做过新颖性检索。请直接帮我设计这个 HCI 研究，写出 study-spec.md。保存到 /tmp/hci-study-designer-eval-b/",
+      "expected_output": "应拒绝直接设计，或明确说明必须先通过 novelty gate 再设计研究",
+      "files": []
+    }
+  ]
+}

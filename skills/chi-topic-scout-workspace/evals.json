@@ -1,0 +1,17 @@
+{
+  "skill_name": "chi-topic-scout",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我查一下「手势交互 + 老年用户」这个 HCI 方向的新颖性。覆盖 ACM DL、DBLP、Google Scholar。给我一个相关文献对比表、novelty matrix，以及 keep/pivot/drop 建议（要有明确结论，不要模糊）。保存到 /tmp/chi-topic-scout-eval-a/",
+      "expected_output": "应产出 search-log、novelty-matrix、references.bib 片段，以及明确的 keep/pivot/drop 决定（不得模糊）",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我想研究在 VR 环境里用眼动追踪辅助文本输入的 HCI 方向。查一下 ACM DL 和 IEEE Xplore，看看这个方向的 novelty 在哪，给我一个新颖性矩阵和建议。保存到 /tmp/chi-topic-scout-eval-b/",
+      "expected_output": "应产出 novelty matrix、close papers 比较表、keep/pivot/drop 决定",
+      "files": []
+    }
+  ]
+}

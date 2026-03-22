@@ -1,0 +1,7 @@
+{
+  "expectations": [
+    {"text": "明确说明了必须先通过 novelty gate 才能设计研究", "passed": true, "evidence": "Response explicitly quotes the rule: 'Do not design a study before the novelty gate is complete' and states 'I cannot at this time generate study-spec.md'"},
+    {"text": "拒绝直接产出 study-spec 或告知用户先做新颖性检索", "passed": true, "evidence": "Did not generate study-spec.md; told user to run chi-topic-scout first with specific suggested search keywords"},
+    {"text": "解释了 novelty gate 的重要性（避免浪费资源做已有研究）", "passed": true, "evidence": "Gave 3 reasons: duplicate work risk, imprecise RQ positioning, suboptimal method selection; explicitly named chi-topic-scout as next step — stronger than old skill"}
+  ]
+}

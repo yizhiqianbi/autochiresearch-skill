@@ -1,0 +1,10 @@
+{
+  "eval_id": 2,
+  "eval_name": "b-continue-llm",
+  "prompt": "用 chi-project-runner 继续 /Users/pencil/Documents/PrepareMLLM/autochiresearch-skill/projects/llm，从当前 stage 继续做，不要问我，直接推进一个 stage。",
+  "assertions": [
+    {"text": "读取了 STATE.json 来确定当前阶段"},
+    {"text": "继续了正确的 stage（不是重新开始）"},
+    {"text": "产出了该 stage 对应的 artifact"}
+  ]
+}

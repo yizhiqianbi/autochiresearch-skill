@@ -1,0 +1,8 @@
+{
+  "expectations": [
+    {"text": "描述了数据导出路径（output/collection 或等价目录）", "passed": true, "evidence": "Section 4 covers filename convention and output/collection/ as target directory"},
+    {"text": "说明了如何导入外部 CSV（import_flat_csv.py 或等价方法）", "passed": true, "evidence": "Section 5 shows exact analyze_fake_data.py command with --input flag"},
+    {"text": "没有要求或建议服务器部署", "passed": true, "evidence": "No server content; explicitly no-server approach throughout"},
+    {"text": "说明了 raw 数据和 cleaned 数据的分离存储", "passed": true, "evidence": "Section 7 directory map separates output/collection/ (raw) from output/analysis/ (derived)"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "b-continue-llm-project",
+  "prompt": "继续 /Users/pencil/Documents/PrepareMLLM/autochiresearch-skill/projects/llm 这个 AutoCHIResearch 项目，读取当前 STATE.json，从当前 stage 继续往下做，不要等我确认，直接推进到下一个 stage 完成为止。",
+  "assertions": [
+    {"text": "读取了 STATE.json 来确定当前阶段"},
+    {"text": "识别出了正确的当前 stage 并说明了它"},
+    {"text": "产出了对应 stage 要求的 artifact（而非随意写文件）"},
+    {"text": "没有停下来询问用户下一步"}
+  ]
+}

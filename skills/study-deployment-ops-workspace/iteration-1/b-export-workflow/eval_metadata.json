@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "b-export-workflow",
+  "prompt": "projects/llm 的问卷在本地已可以跑了。帮我写好整个数据收集流程：怎么导出数据、怎么把参与者填回来的 CSV 导回到项目里。我自己发链接，不需要服务器。workspace：/Users/pencil/Documents/PrepareMLLM/autochiresearch-skill",
+  "assertions": [
+    {"text": "描述了数据导出路径（output/collection 或等价目录）"},
+    {"text": "说明了如何导入外部 CSV（import_flat_csv.py 或等价方法）"},
+    {"text": "没有要求或建议服务器部署"},
+    {"text": "说明了 raw 数据和 cleaned 数据的分离存储"}
+  ]
+}
