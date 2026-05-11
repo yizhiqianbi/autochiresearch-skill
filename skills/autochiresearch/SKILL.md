@@ -1,13 +1,12 @@
 ---
 name: autochiresearch
 description: >
-  Orchestrate the full AutoCHIResearch local-first pipeline for any HCI or CHI-style research idea —
-  from literature retrieval and novelty judgment through study design, data collection prep, analysis,
-  and LaTeX paper drafting inside an AutoCHIResearch workspace. Use this skill whenever the user
-  mentions an HCI research idea, a CHI study pipeline, AutoCHIResearch, or $autochiresearch —
-  including mid-project continuation, single-phase work, or resuming a stalled project. Don't wait
-  for the user to explicitly say "use AutoCHIResearch": if the request is about running, continuing,
-  or setting up an HCI research workflow end-to-end, use this skill immediately.
+  Drive the full AutoCHIResearch local-first HCI/CHI pipeline inside an AutoCHIResearch workspace:
+  start from a raw idea or continue an existing project or current stage through brief, novelty,
+  study, build, deployment, analysis, and paper drafting. Trigger when the user asks to start,
+  continue, resume, or fully drive an HCI/CHI research workflow, says AutoCHIResearch or
+  $autochiresearch, references STATE.json/current stage/workspace, or asks to take an HCI idea
+  从 idea 到投稿.
 ---
 
 # AutoCHIResearch
@@ -18,6 +17,9 @@ This skill drives the complete HCI research pipeline from a raw idea to a locall
 analyzed, locally drafted paper. The default mode is local-first: write artifacts locally, preview
 studies locally, let humans distribute surveys when needed, then import returned data back in for
 analysis and writing. A server is never required unless the user explicitly asks for one.
+
+Do not wait for the user to explicitly say "use AutoCHIResearch" — if the request involves running,
+continuing, or setting up an HCI research workflow end-to-end, use this skill immediately.
 
 This skill must not assume one machine-specific absolute path. Resolve the workspace first, then
 operate inside it.
@@ -34,7 +36,7 @@ Resolution order:
 
 - `AUTOCHI_REPO` environment variable
 - current working directory or one of its parents if they contain `scripts/autochi.py` and `program.md`
-- a nearby `autochiresearch` sibling directory
+- a nearby `autochiresearch` or `autochiresearch-skill` sibling directory
 - legacy default path only as a last fallback
 
 ## Workflow
@@ -67,6 +69,7 @@ genuinely blocked by ethics review, missing credentials, or an explicit novelty 
 - `novelty`
   - Prefer `citation-management` and `chi-topic-scout` if they are available
   - Update `artifacts/novelty-matrix.md`, `literature/search-log.md`, and `literature/references.bib`
+  - Maintain a real reading log; the paper stage should usually reflect a 40+ paper corpus
   - Stop here if the decision is pivot or drop — do not fake progress
 
 ### Mid
@@ -74,13 +77,26 @@ genuinely blocked by ethics review, missing credentials, or an explicit novelty 
 - `study`
   - Prefer `hci-study-designer` if it is available
   - Decide whether the topic needs a survey, interviews, a prototype, or a mixed path
+  - If multiple prototype or instrument directions are plausible, create a prototype inventory and insert a human checkpoint before build
+- `build`
+  - **Actually build** the prototype, questionnaire, or instrument specified in study-spec
+  - Deliver working artifacts: runnable prototype apps, completable questionnaires, task rubrics, stimulus sets
+  - Record which prototype path the human approved, or explicitly note when a checkpoint was waived
+  - Write `artifacts/build-report.md` documenting what was built, how to run it, and smoke-test results
+- **Data-mode gate** (after `build` completes)
+  - Ask the user to choose: `synthetic` (generate fake data now) or `real` (wait for real participant data)
+  - Set via `python3 scripts/autochi.py set-data-mode <project> synthetic|real`
+  - The workflow blocks at `deployment` until a mode is chosen
 - `deployment`
   - This stage means packaging and collection prep, **not server deployment by default**
   - Prefer `study-deployment-ops` for local preview, flow validation, export templates, and collection monitoring
+  - In `synthetic` mode: also prepare data generation scripts
+  - In `real` mode: design the deployment plan and wait for the user to collect data
   - If the user explicitly wants a server, `study-deployment-ops` can also handle that path
 - `analysis`
   - Prefer `hci-analysis-writer` if it is available
-  - Define inclusion rules, derived variables, figures, and manuscript-ready outputs **before** full collection begins
+  - In `synthetic` mode: run the analysis pipeline on generated data, label all outputs as synthetic
+  - In `real` mode: define the analysis plan, wait for real data before executing
   - Write `analysis/analysis-plan.md` at this stage
 
 ### Post
@@ -88,49 +104,41 @@ genuinely blocked by ethics review, missing credentials, or an explicit novelty 
 - `paper`
   - Prefer `scientific-writing`, `citation-management`, and `paper-compile` if they are available
   - Read `../shared-references/paper-judge.md` before the final completion pass
-  - Update `paper/paper-brief.md`, `paper/main.tex`, `paper/paper-review.md`, and `paper/references.bib`
-  - After the review is `READY`, compile the manuscript to `output/exports/paper.pdf` with:
-    `python3 scripts/autochi.py build-paper <slug>`
-  - Treat `paper/main.tex` as the real artifact, not as a placeholder shell
-  - The manuscript should be a stand-alone ACM `sigconf` draft with, at minimum:
-    - Abstract
-    - Introduction
-    - Related Work
-    - Method
-    - Results
-    - Discussion
-    - Limitations
-    - Ethics and Privacy
-    - Conclusion
-  - Once the manuscript is structurally complete, spawn a dedicated sub-agent to judge the paper.
-    Give that sub-agent only the project-local manuscript context it needs and have it write a
-    fresh `paper/paper-review.md` using the rubric in `../shared-references/paper-judge.md`.
-  - Do not self-grade the paper and immediately mark the stage complete. The paper stage now
-    requires an independent review artifact with a `READY` verdict before `sync` can advance.
-  - A long draft alone is still insufficient. The paper stage should not count as complete until a
-    PDF build succeeds or the user explicitly accepts an environment-level TeX blocker.
-  - When drafting `paper/main.tex`, write full prose paragraphs rather than bullet skeletons. As a
-    rough floor: Abstract 150--250 words, Introduction 600+, Related Work 600+, Method 700+,
-    Results 800+, and Discussion 500+.
-  - Do not mark the paper stage complete with a short synopsis. A CHI-ready draft should be
-    substantial enough to read as a real paper rather than an outline.
-  - As a practical rule of thumb, target at least a few thousand words in `paper/main.tex`; many real
-    CHI papers are much longer, often around the length of a 10--15 page ACM `sigconf` manuscript
-    excluding references.
+  - Update `paper/paper-brief.md`, `paper/figure-plan.md`, `paper/main.tex`, `paper/adversarial-review.md`, `paper/paper-review.md`, and `paper/references.bib`
+  - Treat `paper/figure-plan.md` as a structured visual brief with style, must-include, must-avoid, and human approval fields
+  - Use Codex image generation / GPT Image 2 for paper image assets by default, save final PNGs under
+    `output/exports/figures/`, set `Figure Decision` to `gpt-image-2` in `paper/figure-plan.md`,
+    and do not default to PaperBanana
+  - Do not mark the paper stage complete with a thin bibliography; target at least 40 validated citations in `paper/references.bib`
+  - Do not mark the paper stage complete if `paper/main.tex` has fewer than 10000 visible words or if
+    the compiled PDF renders to fewer than 10 pages under `output/exports/rendered-pages/`; expand the
+    manuscript and rebuild until it reaches both thresholds
+  - Run the built-in adversarial reviewer subagent gate before final paper review. Write the
+    critiques, author repairs, and residual risks to `paper/adversarial-review.md`
+  - Adversarial reviewer roles:
+    - Reviewer A: methods, construct validity, measures, statistics, and claim support
+    - Reviewer B: systems contribution, interaction design, prototype concreteness, and differentiation
+    - Reviewer C: related work, novelty, citation fit, and contribution positioning
+    - Reviewer D: writing clarity, claim-evidence alignment, CHI fit, and overall reviewer readability
+  - Only after those reviewer responses are marked addressed or waived should the final paper-judge
+    sub-agent produce `paper/paper-review.md`
+  - Follow all paper-stage rules in `program.md` — manuscript quality, section requirements, figure
+    generation, independent review, PDF build, and visual QA are defined there as the single source
+    of truth
+  - Key gate: the paper stage requires a complete `paper/adversarial-review.md`, an independent
+    `paper/paper-review.md` with a `READY` verdict, **and** a successful PDF build before `sync`
+    can advance
 
-## Local-First Rules
+## Local-First and Mandatory Rules
+
+Read `program.md` for the full set.  Critical rules repeated here for routing clarity:
 
 - Do not require a server unless the user explicitly wants one.
-- Prefer a local preview plus manual human distribution over self-hosted launch.
-- When distribution happens through an external platform, preserve a canonical schema in the project
-  and import returned CSV files back into the local database.
-- Keep raw returned CSV files separate from cleaned analysis outputs.
-- Treat the initialized project directory as the source of truth for the run.
-- By default, new projects should live outside the skill repository in a separate projects directory.
-- Legacy in-repo `projects/` directories are still valid when resuming older runs.
 - Do not skip the novelty gate.
 - Do not move into study design unless the topic is marked keep.
-- Do not claim objective causal effects from retrospective self-report data.
+- Do not silently choose between multiple plausible prototype directions without a human checkpoint.
+- Treat the initialized project directory as the source of truth for the run.
+- New projects should live outside the skill repository by default.
 
 ## Output Convention
 
@@ -153,8 +161,20 @@ already uses a different explicit convention.
   - `python3 scripts/autochi.py status <slug>`
 - Recompute phase state:
   - `python3 scripts/autochi.py sync <slug>`
+- Set data mode (after build stage):
+  - `python3 scripts/autochi.py set-data-mode <slug> synthetic`
+  - `python3 scripts/autochi.py set-data-mode <slug> real`
 - Compile the paper:
   - `python3 scripts/autochi.py build-paper <slug>`
+- Run adversarial paper review:
+  - Spawn the four reviewer subagents described in the paper-stage rules when the user requests
+    subagents/adversarial review and subagent tooling is available.
+  - Merge their critiques and the author response matrix into `paper/adversarial-review.md`.
+  - If subagent tooling is unavailable, run the same four-role review serially and record the fallback in that file.
+- Generate paper image assets:
+  - Use Codex image generation / GPT Image 2 by default for teaser and method/pipeline images.
+  - Save final project-bound assets under `output/exports/figures/`.
+  - If GPT Image 2 generation is unavailable, prepare the exact image prompt in `paper/figure-plan.md` and use a deterministic local plotting/diagram fallback rather than PaperBanana.
 - Run a local study app:
   - `python3 prototype/app.py init-db`
   - `python3 prototype/app.py run --host 127.0.0.1 --port <port>`
@@ -173,22 +193,24 @@ Leave each project with, at minimum:
 
 - `artifacts/research-brief.md`
 - `artifacts/novelty-matrix.md`
+- `literature/search-log.md`
 - `artifacts/study-spec.md`
+- `artifacts/build-report.md`
 - `studies/survey.md`
 - `studies/protocol.md`
 - `deploy/deployment-plan.md`
 - `analysis/analysis-plan.md`
 - `paper/paper-brief.md`
+- `paper/figure-plan.md`
 - `paper/main.tex`
+- `paper/adversarial-review.md`
 - `paper/paper-review.md`
 - `literature/references.bib`
 - `output/README.md`
 
-For the paper stage specifically, `paper/main.tex` should be a stand-alone manuscript draft rather
-than a section list with short placeholder paragraphs. If the project only has a paper brief and a
-very short LaTeX shell, the paper stage is still incomplete. The stage is also incomplete if there
-is no independent `paper/paper-review.md`, if that review does not give a `READY` verdict, or if
-no compiled `output/exports/paper.pdf` has been produced.
+Paper-stage completeness is enforced by `autochi.py sync` — see `program.md` for the full
+checklist (manuscript word count, minimum 10 rendered pages, required sections, teaser, adversarial
+reviewer gate, final review verdict, PDF build, etc.).
 
 When the project uses manual external distribution, also leave:
 
